@@ -16,8 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-
 urlpatterns = [
-    url(r'^polls/', include('imager_profile.urls')),
+    url(r'^imager_profile/', include('imager_profile.urls')),
     url(r'^admin/', admin.site.urls),
 ]

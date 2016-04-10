@@ -4,4 +4,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Welcome to imager profile page.  Make a profile or you know use and already established photo upload site.")
+    return HttpResponse("Hello, make an imager_profile if you have never heard of a place called Flicker.")
