@@ -1,15 +1,27 @@
+# -*- Coding:Utf-8 -*-
+"""Define Imager Profile models."""
 from django.db import models
 
-# Create your models here.
 from django.contrib.auth.models import User
 from django.utils.encoding import python_2_unicode_compatible
 
 
+class ActiveProfileManager(models.Manager):
+    """Define an Active Profile Manager class."""
+
+    def get_queryset(self):
+        """Return a list of all active users."""
+        ga = super(ActiveProfileManager, self).get_queryset()
+        return ga.filter(user__is_active__exact=True)
+
+
 @python_2_unicode_compatible
 class UserProfile(models.Model):
-    profile = models.OneToOneField(
+    """Create a unique profile for a user."""
+
+    user = models.OneToOneField(
         User,
-        on_delete=models.CASCADE,
+        related_name="profile",
         primary_key=True,
     )
     camera_type = models.CharField(('nikkon'), max_length=30, blank=True)
@@ -18,7 +30,9 @@ class UserProfile(models.Model):
     photo_type = models.CharField(('nature'), max_length=30, blank=True)
     social_media = models.CharField(('handle'), max_length=30, blank=True)
 
+    active = ActiveProfileManager()
+
     @property
     def is_active(self):
+        """Property to define if user is active."""
         return self.user.is_active
-    
