@@ -24,11 +24,11 @@ class UserProfile(models.Model):
         related_name="profile",
         primary_key=True,
     )
-    camera_type = models.CharField(('nikkon'), max_length=30, blank=True)
-    address = models.CharField(('address'), max_length=60, blank=True)
-    web_link = models.CharField(('personal site'), max_length=70, blank=True)
-    photo_type = models.CharField(('nature'), max_length=30, blank=True)
-    social_media = models.CharField(('handle'), max_length=30, blank=True)
+    camera_type = models.CharField(max_length=30, blank=True)
+    address = models.CharField(max_length=60, blank=True)
+    web_link = models.CharField(max_length=70, blank=True)
+    photo_type = models.CharField(max_length=30, blank=True)
+    social_media = models.CharField(max_length=30, blank=True)
 
     active = ActiveProfileManager()
 
