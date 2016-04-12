@@ -1,3 +1,15 @@
 from django.test import TestCase
+import factory
+from imager_images.models import User, Photo, Album
 
-# Create your tests here.
+
+class UserFactory(factory.django.DjangoModelFactory):
+    """Define a User factory with a single user."""
+
+    class Meta:
+        """Define a model instance class."""
+
+        model = User
+
+    username = 'bob'
+    email = 'bob@example.com'
