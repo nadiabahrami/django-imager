@@ -42,6 +42,15 @@ class ProfileTestCase(TestCase):
     def test_all_active2(self):
         self.assertEquals(len(UserProfile.active.all()), 1)
 
+    def test_deactivate(self):
+        self.user.is_active = False
+        self.assertFalse(self.user.is_active)
+
+    def test_deactivate_later(self):
+        self.user.is_active = False
+        self.user.save()
+        self.assertNotIn(self.user.profile, UserProfile.active.all())
+
 
 class DeleteTheDude(ProfileTestCase):
 
