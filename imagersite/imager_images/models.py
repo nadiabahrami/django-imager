@@ -1,6 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.utils.encoding import python_2_unicode_compatible
+from django.conf import settings
 
 
 PHOTO_ACCESS_CHOICES = (
@@ -14,7 +15,8 @@ PHOTO_ACCESS_CHOICES = (
 class Photo(models.Model):
     """Create photos for a user."""
 
-    owner = models.ForeignKey(User, related_name="photo")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
+                              on_delete=models.CASCADE, related_name="photo")
     title = models.CharField(max_length=30, blank=True)
     description = models.CharField(max_length=60, blank=True)
     photo_file = models.ImageField(upload_to='bob')
@@ -25,14 +27,16 @@ class Photo(models.Model):
                                  default='private')
 
     def __str__(self):
-        return "{}'s photo of {}".format(self.user.username, self.title)
+        """Return the ownership and name of photo."""
+        return "{}'s photo of {}".format(self.owner.username, self.title)
 
 
 @python_2_unicode_compatible
 class Album(models.Model):
     """Define album class."""
 
-    owner = models.ForeignKey(User, related_name="album")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
+                              on_delete=models.CASCADE, related_name="album")
     pictures = models.ManyToManyField(Photo, related_name="pictures")
     cover = models.ForeignKey(Photo, related_name="cover_of")
     title = models.CharField(max_length=30, blank=True)
@@ -44,4 +48,5 @@ class Album(models.Model):
                                  default='private')
 
     def __str__(self):
-        return "{}'s album of {}".format(self.user.username, self.title)
+        """Return the user's album name."""
+        return "{}'s album of {}".format(self.owner.username, self.title)

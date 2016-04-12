@@ -3,6 +3,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.encoding import python_2_unicode_compatible
+from django.conf import settings
 
 
 class ActiveProfileManager(models.Manager):
@@ -28,7 +29,7 @@ class UserProfile(models.Model):
     """Create a unique profile for a user."""
 
     user = models.OneToOneField(
-        User,
+        settings.AUTH_USER_MODEL,
         related_name="profile",
         primary_key=True,
     )
@@ -42,6 +43,7 @@ class UserProfile(models.Model):
 
     friends = models.ManyToManyField("self", symmetrical=False,
                                      related_name='friend_of')
+    objects = models.Manager()
     active = ActiveProfileManager()
 
     @property
@@ -49,6 +51,6 @@ class UserProfile(models.Model):
         """Property to define if user is active."""
         return self.user.is_active
 
-
     def __str__(self):
+        """Hand back username's profile."""
         return "{}'s profile".format(self.user.username)
