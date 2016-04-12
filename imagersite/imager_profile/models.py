@@ -1,7 +1,6 @@
 # -*- Coding:Utf-8 -*-
 """Define Imager Profile models."""
 from django.db import models
-
 from django.contrib.auth.models import User
 from django.utils.encoding import python_2_unicode_compatible
 
@@ -13,6 +12,15 @@ class ActiveProfileManager(models.Manager):
         """Return a list of all active users."""
         ga = super(ActiveProfileManager, self).get_queryset()
         return ga.filter(user__is_active__exact=True)
+
+
+LOCATION = (
+    ('North America', 'North America'),
+    ('Asia', 'Asia'),
+    ('Africa', 'Africa'),
+    ('South America', 'South America'),
+    ('Europe', 'Europe'),
+)
 
 
 @python_2_unicode_compatible
@@ -29,7 +37,11 @@ class UserProfile(models.Model):
     web_link = models.CharField(max_length=70, blank=True)
     photo_type = models.CharField(max_length=30, blank=True)
     social_media = models.CharField(max_length=30, blank=True)
+    region = models.CharField(max_length=30, choices=LOCATION,
+                              default='North America')
 
+    friends = models.ManyToManyField("self", symmetrical=False,
+                                     related_name='friend_of')
     active = ActiveProfileManager()
 
     @property

@@ -31,6 +31,7 @@ class Photo(models.Model):
 @python_2_unicode_compatible
 class Album(models.Model):
     """Define album class."""
+
     owner = models.ForeignKey(User, related_name="album")
     pictures = models.ManyToManyField(Photo, related_name="pictures")
     cover = models.ForeignKey(Photo, related_name="cover_of")
