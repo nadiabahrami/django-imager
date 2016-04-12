@@ -36,3 +36,7 @@ class UserProfile(models.Model):
     def is_active(self):
         """Property to define if user is active."""
         return self.user.is_active
+
+
+    def __str__(self):
+        return "{}'s profile".format(self.user.username)
