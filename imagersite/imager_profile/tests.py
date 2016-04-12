@@ -41,6 +41,26 @@ class ProfileTestCase(TestCase):
         """Test that profile is created on user save."""
         self.assertTrue(self.user.profile)
 
+    def test_profile_camera_type(self):
+        """Test that profile field is created on user save."""
+        self.assertEquals(self.user.profile.camera_type, '')
+
+    def test_profile_address(self):
+        """Test that profile field is created on user save."""
+        self.assertEquals(self.user.profile.address, '')
+
+    def test_profile_web_link(self):
+        """Test that profile field is created on user save."""
+        self.assertEquals(self.user.profile.web_link, '')
+
+    def test_profile_photo_type(self):
+        """Test that profile field is created on user save."""
+        self.assertEquals(self.user.profile.photo_type, '')
+
+    def test_profile_social_media(self):
+        """Test that profile field is created on user save."""
+        self.assertEquals(self.user.profile.social_media, '')
+
     def test_active(self):
         """Assert that .is_active is True."""
         self.assertTrue(self.user.is_active)
