@@ -1,6 +1,6 @@
 from django.test import TestCase
 import factory
-from imager_profile.models import User
+from imager_profile.models import User, UserProfile
 
 # Create your tests here.
 
@@ -35,3 +35,22 @@ class ProfileTestCase(TestCase):
 
     def test_active(self):
         self.assertTrue(self.user.is_active)
+
+    def test_all_active(self):
+        self.assertIn(self.user.profile, UserProfile.active.all())
+
+    def test_all_active2(self):
+        self.assertEquals(len(UserProfile.active.all()), 1)
+
+
+class DeleteTheDude(ProfileTestCase):
+
+    def setUp(self):
+        super(DeleteTheDude, self).setUp()
+        self.user.delete()
+
+    def test_all_active(self):
+        self.assertNotIn(self.user.profile, UserProfile.active.all())
+
+    def test_all_active2(self):
+        self.assertEquals(len(UserProfile.active.all()), 0)
