@@ -16,6 +16,20 @@ def _image_path(instance, filename):
     return "user_{0}/{1}".format(instance.owner.id, filename)
 
 
+class PhotoManager(models.Manager):
+    """Define an Active Profile Manager class."""
+
+    def get_queryset(self):
+        """Return a list of all active users."""
+        qs = super(PhotoManager, self).get_queryset()
+        return qs.filter(owner__published__exact='public')
+
+    # def get_queryset(self):
+    #     """Return a list of all active users."""
+    #     qs = super(ActiveProfileManager, self).get_queryset()
+    #     return qs.filter(user__is_active__exact=True)
+
+
 @python_2_unicode_compatible
 class Photo(models.Model):
     """Create photos for a user."""
@@ -31,6 +45,7 @@ class Photo(models.Model):
     date_published = models.DateTimeField(null=True, blank=True)
     published = models.CharField(max_length=30, choices=PHOTO_ACCESS_CHOICES,
                                  default='private')
+    public = PhotoManager()
 
     def __str__(self):
         """Return the ownership and name of photo."""
