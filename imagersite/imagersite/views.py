@@ -11,8 +11,12 @@ class ClassView(TemplateView):
     template_name = 'home.html'
 
     def get_context_data(self):
+        """Return a random public photo for homepage."""
         # for each in Photo.public.all():
         #     print(each)
-        random_photo_url = Photo.public.filter(published__contains='public').order_by("?")[:1]
-        # random_photo_url = 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
-        return {'random_photo': random_photo_url[0].photo_file}
+        try:
+            random_photo_url = Photo.public.filter(published__contains='public').order_by("?")[:1]
+            return {'random_photo': random_photo_url[0].photo_file}
+        except IndexError:
+            random_photo_url = 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
+            return {'random_photo': random_photo_url}
