@@ -22,7 +22,7 @@ class PhotoManager(models.Manager):
     def get_queryset(self):
         """Return a list of all active users."""
         qs = super(PhotoManager, self).get_queryset()
-        return qs.filter(owner__published__exact='public')
+        return qs.all()
 
     # def get_queryset(self):
     #     """Return a list of all active users."""

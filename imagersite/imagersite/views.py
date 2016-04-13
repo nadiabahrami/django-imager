@@ -13,6 +13,6 @@ class ClassView(TemplateView):
     def get_context_data(self):
         # for each in Photo.public.all():
         #     print(each)
-        random_photo_url = Photo.public.all()[:1]#.order_by("?")[:1]
+        random_photo_url = Photo.public.filter(published__contains='public').order_by("?")[:1]
         # random_photo_url = 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
-        return {'random_photo': random_photo_url}
+        return {'random_photo': random_photo_url[0].photo_file}
