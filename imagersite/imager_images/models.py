@@ -5,10 +5,15 @@ from django.conf import settings
 
 
 PHOTO_ACCESS_CHOICES = (
-    ('public', 'public'),
-    ('private', 'private'),
-    ('shared', 'shared'),
+    ('public', 'Public'),
+    ('private', 'Private'),
+    ('shared', 'Shared'),
 )
+
+
+def _image_path(instance, filename):
+    """Photo will be uploaded to media root then correct folder."""
+    return "user_{0}/{1}".format(instance.owner.id, filename)
 
 
 @python_2_unicode_compatible
@@ -17,9 +22,10 @@ class Photo(models.Model):
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE, related_name="photo")
+    photo_file = models.ImageField(upload_to=_image_path)
     title = models.CharField(max_length=30, blank=True)
+                             # default=photo_file.filename)
     description = models.CharField(max_length=60, blank=True)
-    photo_file = models.ImageField(upload_to='bob')
     date_uploaded = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     date_published = models.DateTimeField(null=True, blank=True)
@@ -39,7 +45,7 @@ class Album(models.Model):
                               on_delete=models.CASCADE, related_name="album")
     pictures = models.ManyToManyField(Photo, related_name="pictures")
     cover = models.ForeignKey(Photo, related_name="cover_of")
-    title = models.CharField(max_length=30, blank=True)
+    title = models.CharField(max_length=30)
     description = models.CharField(max_length=60, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)

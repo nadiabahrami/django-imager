@@ -57,7 +57,7 @@ ROOT_URLCONF = 'imagersite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'imagersite', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,5 +127,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #media
-MEDIA_DRIECTORY = 'media'
+MEDIA_DIRECTORY = 'media'
 MEDIA_URL = '/media/'

@@ -11,8 +11,8 @@ class ActiveProfileManager(models.Manager):
 
     def get_queryset(self):
         """Return a list of all active users."""
-        ga = super(ActiveProfileManager, self).get_queryset()
-        return ga.filter(user__is_active__exact=True)
+        qs = super(ActiveProfileManager, self).get_queryset()
+        return qs.filter(user__is_active__exact=True)
 
 
 LOCATION = (
@@ -30,6 +30,7 @@ class UserProfile(models.Model):
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
         related_name="profile",
         primary_key=True,
     )
