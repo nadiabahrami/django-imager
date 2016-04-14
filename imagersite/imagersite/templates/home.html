@@ -8,9 +8,9 @@
         <a href="/accounts/register/"> Register</a>
     {% endif %}
 
-    {% if random_photo %}
-        <img src="{{ random_photo.photo_file.url }}" />
-    {% else %}
-        <img src="{% static '300px-BinaryTreeRotations.svg.png' %}" />
-    {% endif %}
+{#    {% if random_photo %}#}
+{#        <img src="{{ random_photo.photo_file.url }}" />#}
+{#    {% else %}#}
+{#        <img src="{% static 'default_img.jpg' %}" />#}
+{#    {% endif %}#}
 {% endblock %}
