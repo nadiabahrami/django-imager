@@ -40,8 +40,8 @@
 						<article>
                             {% if random_photo %}
                                 <a class="thumbnail" href="{{ random_photo.photo_file.url }}" data-position="left center"><img src="{% static "default_img.jpg" %}" alt="" /></a>
-                                <h2>{{ random_photo.photo_file.title }}</h2>
-                                <p>{{ random_photo.photo_file.description }}</p>
+                                <h2>{{ random_photo.title }}</h2>
+                                <p>{{ random_photo.description }}</p>
                             {% else %}
                                 <a class="thumbnail" href="{% static "default_img.jpg" %}" data-position="left center"><img src="{% static "default_img.jpg" %}" alt="" /></a>
                                 <h2>Image of the moment</h2>
