@@ -1,7 +1,11 @@
+{% load staticfiles %}
 <html>
 <body>
-<h1>Hello worlddd</h1>
-<h3>This is the login base</h3>
-<p>{{foo}}</p>
+<h1>Welcome{% if user.is_authenticated %} {{user.username}}{% endif %} to the Imager website.</h1>
+<h3>Please create an account to store photos of your own!</h3>
+
+{% block content %}
+{% endblock %}
+
 </body>
 </html>

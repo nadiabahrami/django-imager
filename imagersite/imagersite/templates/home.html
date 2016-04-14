@@ -1,9 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
 {% load staticfiles %}
-<html>
-<body>
-<h1>Welcome{% if user.is_authenticated %} {{user.username}}{% endif %} to the Imager website.</h1>
-<h3>Please create an account to store photos of your own!</h3>
-
 {% if user.is_authenticated %}
 <a href="/accounts/logout/">Log Out</a>
 {% else %}
@@ -17,5 +14,4 @@
 {% else %}
     <img src="{% static '300px-BinaryTreeRotations.svg.png' %}" />
 {% endif %} 
-</body>
-</html>
+{% endblock %}

@@ -28,7 +28,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 ACCOUNT_ACTIVATION_DAYS = 7
+
+# https://docs.djangoproject.com/en/1.9/topics/email/#configuring-email-for-development
+# python -m smtpd -n -c DebuggingServer localhost:1025
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/home/'
 
 
