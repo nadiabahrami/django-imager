@@ -39,7 +39,7 @@
 					<section id="thumbnails">
 						<article>
                             {% if random_photo %}
-                                <a class="thumbnail" href="{{ random_photo.photo_file.url }}" data-position="left center"><img src="{% static "default_img.jpg" %}" alt="" /></a>
+                                <a class="thumbnail" href="{{ random_photo.photo_file.url }}" data-position="left center"><img src="{{ random_photo.photo_file.url }}" alt="" /></a>
                                 <h2>{{ random_photo.title }}</h2>
                                 <p>{{ random_photo.description }}</p>
                             {% else %}
