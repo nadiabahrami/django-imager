@@ -15,8 +15,7 @@ class ClassView(TemplateView):
         # for each in Photo.public.all():
         #     print(each)
         try:
-            random_photo_url = Photo.public.filter(published__contains='public').order_by("?")[:1]
-            return {'random_photo': random_photo_url[0].photo_file}
+            random_photo = Photo.public.filter(published__contains='public').order_by("?")[:1][0]
         except IndexError:
-            random_photo_url = 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
-            return {'random_photo': random_photo_url}
+            random_photo = False
+        return {'random_photo': random_photo}

@@ -1,9 +1,13 @@
+{% load staticfiles %}
 <html>
 <body>
 <h1>Welcome to the Imager website.</h1>
 <h3>Please create an account to store photos of your own!</h3>
-
-<img src="{{ random_photo }}" />
-
+ 
+{% if random_photo %}
+    <img src="{{ random_photo.photo_file.url }}" />
+{% else %}
+    <img src="{% static '300px-BinaryTreeRotations.svg.png' %}" />
+{% endif %} 
 </body>
 </html>
