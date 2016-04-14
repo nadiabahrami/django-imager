@@ -23,11 +23,10 @@
 
 				<!-- Header -->
 					<header id="header">
-						<h1>Welcome {% if user.is_authenticated %}{{user.username}}{% endif %} to the Imager website.</h1>
-						<p>
-                            {% block content %}
-                            {% endblock %}
-                        </p>
+
+                        {% block content %}
+                        {% endblock %}
+
 {#						<ul class="icons">#}
 {#							<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>#}
 {#							<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>#}
@@ -41,11 +40,13 @@
 						<article>
                             {% if random_photo %}
                                 <a class="thumbnail" href="{{ random_photo.photo_file.url }}" data-position="left center"><img src="{% static "default_img.jpg" %}" alt="" /></a>
+                                <h2>{{ random_photo.photo_file.title }}</h2>
+                                <p>{{ random_photo.photo_file.description }}</p>
                             {% else %}
                                 <a class="thumbnail" href="{% static "default_img.jpg" %}" data-position="left center"><img src="{% static "default_img.jpg" %}" alt="" /></a>
+                                <h2>Image of the moment</h2>
+							    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             {% endif %}
-							<h2>Diam tempus accumsan</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 						</article>
 {#						<article>#}
 {#							<a class="thumbnail" href="images/fulls/02.jpg"><img src="images/thumbs/02.jpg" alt="" /></a>#}

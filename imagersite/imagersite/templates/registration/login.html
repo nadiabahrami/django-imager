@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+    <h1>Welcome to IMAGER login.</h1>
     <form method="post" action=".">
       {% csrf_token %}
       {{ form.as_p }}
@@ -8,7 +9,7 @@
       <input type="hidden" name="next" value="{{ next }}" />
     </form>
 
-    <p>"Forgot password"? <a href="{% url 'auth_password_reset' %}">"Reset it"</a>!</p>
-    <p>"Not member"? <a href="{% url 'registration_register' %}">"Register"</a>!</p>
+    <p>Forgot password?<a href="{% url 'auth_password_reset' %}">Reset</a>!</p>
+    <p>Not a member? <a href="{% url 'registration_register' %}">Register</a>!</p>
     <a href="/home/">Home</a>
 {% endblock %}
