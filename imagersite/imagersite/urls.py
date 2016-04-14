@@ -25,8 +25,10 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^images/', include('imager_images.urls')),
     url(r'^profile/', include('imager_profile.urls')),
-
     url(r'^home/', ClassView.as_view(), name='home_page'),
+    # url(r'^login/', ClassView.as_view(), name='home_page'),
+    # url(r'^accounts/profile/$', MyRegistrationView.as_view(), name='registration_register'),
+    url(r'^accounts/', include('registration.backends.hmac.urls')),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,14 @@
+<html>
+<body>
+<h1>Welcome to registration.</h1>
+<form action="." method='POST'>
+    {% csrf_token %}
+    <label>Username:{{ form.username }}</label>
+    <label>Email:{{ form.email }}</label>
+    <label>Password:{{ form.password1 }}</label>
+    <label>Confirm Password:{{ form.password2 }}</label>
+    <input type="submit" value="Submit"/>
+</form>
+<a href="/home/">Home</a>
+</body>
+</html>
