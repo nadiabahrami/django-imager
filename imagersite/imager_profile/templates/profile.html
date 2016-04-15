@@ -3,8 +3,7 @@
     {% if user.is_authenticated %}
         <h1>Welcome {{ user.username }} to your profile page.</h1>
 
-        <h3>Photos: <stong>{{ photo_count }}</stong></h3> |
-        <h3>Albums: <stong>{{ album_count }}</stong></h3>
+        <h3>Photos: <stong>{{ photo_count }}</stong> | Albums: <stong>{{ album_count }}</stong></h3>
 
         <p>Username: <strong>{{ user.username }}</strong> </p>
         <p>Camera type: <strong>{{ user.profile.camera_type }}</strong></p>

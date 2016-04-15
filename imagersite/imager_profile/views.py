@@ -12,3 +12,4 @@ class ProfileView(TemplateView):
         photo_count = Photo.public.filter(owner=user.pk).count()
         album_count = Album.all_albums.filter(owner=user.pk).count()
         return {'photo_count': photo_count, 'album_count': album_count}
+
