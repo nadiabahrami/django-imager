@@ -15,8 +15,6 @@ class ClassView(TemplateView):
 
     def get_context_data(self):
         """Return a random public photo for homepage."""
-        # for each in Photo.public.all():
-        #     print(each)
         try:
             random_photo = Photo.public.filter(published__contains='public').order_by("?")[:1][0]
         except IndexError:

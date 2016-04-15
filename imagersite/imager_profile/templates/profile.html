@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Welcome {{ user.username }} to your profile page.</h1>
+
+        <h3>Photos: <stong>{{ photo_count }}</stong></h3> |
+        <h3>Albums: <stong>{{ album_count }}</stong></h3>
+
+        <p>Username: <strong>{{ user.username }}</strong> </p>
+        <p>Camera type: <strong>{{ user.profile.camera_type }}</strong></p>
+        <p>Address: <strong>{{ user.profile.address }}</strong> </p>
+        <p>Website: <strong>{{ user.profile.web_link }}</strong> </p>
+        <p>Photograpy type: <strong>{{ user.profile.photo_type }}</strong> </p>
+        <p>Social Media: <strong>{{ user.profile.social_media }}</strong> </p>
+        <p>Region: <strong>{{ user.profile.region }}</strong> </p>
+{#        {% for friend in user.profile.friends %}#}
+            <p>Friends: {{ user.profile.friends }} </p>
+{#        {% endfor %}#}
+    {% if user.is_authenticated %}
+        <a href="/accounts/logout/">Log Out</a>
+    {% else %}
+        <a href="/accounts/login/">Log In</a> | <a href="/accounts/register/">Register</a>
+    {% endif %}
+
+    {% endif %}
+{% endblock %}

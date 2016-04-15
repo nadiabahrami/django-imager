@@ -1,7 +1,28 @@
+from __future__ import unicode_literals
+from django.contrib.auth.models import User
+from imager_images.models import Photo, Album
+from imager_profile.models import UserProfile
 from django.shortcuts import render
-# Create your views here.
-from django.http import HttpResponse
+from django.views.generic import TemplateView
 
 
-def index(request):
-    return HttpResponse("Hello, make an imager_profile if you have never heard of a place called Flicker.")
+class ProfileView(TemplateView):
+    template_name = 'profile.html'
+
+
+def ProfileView(request, profile_id=None, **kwargs):
+    """Return a random public photo for homepage."""
+    photo_count = Photo.public.filter(id=int(profile_id)).count()
+
+    # album_count = Album.public.all(owner__contains=self.request.user).count()
+    return render(request, "profile.html", context={'photo_count': photo_count,}) # 'album_count': album_count}
+
+
+
+    # def profile_view(request, profile_id=None, **kwargs):
+    #     if not profile_id:
+    #         profile = request.user.profile
+    #     else:
+    #         profile = get_object_or_404(ImagerProfile, id=int(profile_id))
+    #
+    #     return render(request, "profile.html", context={"profile": profile})

@@ -34,7 +34,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/home/'
+LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/profile/'
 
 
 # Application definition
@@ -66,7 +66,8 @@ ROOT_URLCONF = 'imagersite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'imagersite', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'imagersite', 'templates'),
+                 os.path.join(BASE_DIR, 'imager_profile', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
