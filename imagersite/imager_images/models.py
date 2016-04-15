@@ -52,6 +52,15 @@ class Photo(models.Model):
         return "{}'s photo of {}".format(self.owner.username, self.title)
 
 
+class AlbumManager(models.Manager):
+    """Define an Active Profile Manager class."""
+
+    def get_queryset(self):
+        """Return a list of all active users."""
+        qs = super(AlbumManager, self).get_queryset()
+        return qs.all()
+
+
 @python_2_unicode_compatible
 class Album(models.Model):
     """Define album class."""
@@ -67,6 +76,7 @@ class Album(models.Model):
     date_published = models.DateTimeField(null=True, blank=True)
     published = models.CharField(max_length=30, choices=PHOTO_ACCESS_CHOICES,
                                  default='private')
+    all_albums = AlbumManager()
 
     def __str__(self):
         """Return the user's album name."""
