@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     {% if user.is_authenticated %}
-        <h1>Welcome {{ user.username }} to your profile page.</h1>
+        <h1>Welcome <a href="/profile/" target="_self">{{ user.username }}</a> to your profile page.</h1>
 
         <h3>Photos: <stong>{{ photo_count }}</stong> | Albums: <stong>{{ album_count }}</stong></h3>
 
