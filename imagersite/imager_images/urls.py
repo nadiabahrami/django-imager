@@ -1,9 +1,11 @@
 # -*- Coding:Utf-8 -*-
 """Module for my url routing."""
 from django.conf.urls import url
+from .views import LibraryView
 
-from . import views
+# from . import views
+
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^$', LibraryView.as_view(), name='library_view'),
 ]

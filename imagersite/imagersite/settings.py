@@ -42,6 +42,7 @@ LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/profile/'
 INSTALLED_APPS = [
     'imager_profile',
     'imager_images',
+    'sorl.thumbnail',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,7 +81,16 @@ TEMPLATES = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'imager'
+    }
+}
 
+# THUMBNAIL_CONVERT
+
+# THUMBNAIL_IDENTIFY
 
 WSGI_APPLICATION = 'imagersite.wsgi.application'
 
