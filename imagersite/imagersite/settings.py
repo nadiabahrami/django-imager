@@ -41,8 +41,8 @@ LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/profile/'
 
 INSTALLED_APPS = [
     'imager_profile',
-    'imager_images',
     'sorl.thumbnail',
+    'imager_images',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,7 +68,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'imagersite', 'templates'),
-                 os.path.join(BASE_DIR, 'imager_profile', 'templates')],
+                 os.path.join(BASE_DIR, 'imager_profile', 'templates'),
+                 os.path.join(BASE_DIR, 'imager_images', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,7 +86,6 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'image_cache_table',
-        'TIMEOUT': None,
     }
 }
 

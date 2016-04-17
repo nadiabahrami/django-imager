@@ -37,7 +37,7 @@ class Photo(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE, related_name="photo")
     photo_file = models.ImageField(upload_to=_image_path)
-    title = models.CharField(max_length=30, blank=True)
+    title = models.CharField(max_length=30, blank=True, null=True)
                              # default=photo_file.filename)
     description = models.CharField(max_length=60, blank=True)
     date_uploaded = models.DateTimeField(auto_now_add=True)
@@ -68,7 +68,7 @@ class Album(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE, related_name="album")
     pictures = models.ManyToManyField(Photo, related_name="pictures")
-    cover = models.ForeignKey(Photo, related_name="cover_of")
+    cover = models.ForeignKey(Photo, related_name="cover_of", blank=True)
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=60, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
