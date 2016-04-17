@@ -84,9 +84,12 @@ TEMPLATES = [
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'imager'
+        'LOCATION': 'image_cache_table',
+        'TIMEOUT': None,
     }
 }
+
+THUMBNAIL_DEBUG = True
 
 # THUMBNAIL_CONVERT
 
