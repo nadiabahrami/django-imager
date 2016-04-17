@@ -25,6 +25,7 @@ parts/
 sdist/
 var/
 /sample_template
+/imagersite/.idea
 *.egg-info/
 .installed.cfg
 *.egg
