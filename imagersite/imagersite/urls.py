@@ -17,8 +17,8 @@ from django.conf.urls import include, url
 from django.conf import settings
 from django.contrib import admin
 from .views import ClassView
-from django.views.generic import TemplateView
 from django.conf.urls.static import static
+from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^images/', include('imager_images.urls')),
     url(r'^profile/', include('imager_profile.urls')),
     url(r'^home/', ClassView.as_view(), name='home_page'),
-    url(r'^images/library/', include('imager_images.urls')),
+    url(r'^images/library/', login_required(include('imager_images.urls'))),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
 ]
 
