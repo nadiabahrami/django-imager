@@ -19,12 +19,12 @@
     <p>{{album}}</p>
     {% if album.cover %}
         {% thumbnail album.cover.photo_file "100x100" as al_cover%}
-            <img src="{{ al_cover.url }}"width="{{al_cover.x}}" height="{{al_cover.y}}"/>
+            <a href="/images/album/{{user.pk}}/{{album.pk}}"><img src="{{ al_cover.url }}"width="{{al_cover.x}}" height="{{al_cover.y}}"/></a>
         {% empty %}
             <p>No albums Found</p>
         {% endthumbnail %}
     {% else %}
-        <img src="{% static 'default_cover.jpg' %}" width="100" height="100"/>
+        <a href="/images/album/{{user.pk}}/{{album.pk}}"><img src="{% static 'default_cover.jpg' %}" width="100" height="100"/></a>
     {% endif %}
 {% endfor %}
 
