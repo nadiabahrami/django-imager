@@ -68,7 +68,7 @@ class Album(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE, related_name="album")
     pictures = models.ManyToManyField(Photo, related_name="pictures")
-    cover = models.ForeignKey(Photo, related_name="cover_of", blank=True)
+    cover = models.ForeignKey(Photo, related_name="cover_of", blank=True, null=True)
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=60, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
