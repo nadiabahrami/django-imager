@@ -46,7 +46,7 @@ class ImagerSiteTests(TestCase):
 
     def test_home(self):
         """Test that the home route is valid."""
-        response = self.client.get("/home/", {})
+        response = self.client.get("/", {})
         self.assertEquals(response.status_code, 200)
 
     def test_register(self):
