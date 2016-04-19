@@ -18,7 +18,6 @@ from django.conf import settings
 from django.contrib import admin
 from .views import ClassView
 from django.conf.urls.static import static
-from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
