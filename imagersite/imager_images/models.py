@@ -78,6 +78,14 @@ class Album(models.Model):
                                  default='private')
     all_albums = AlbumManager()
 
+    @property
+    def get_cover(self):
+        """If Album has a cover return cover otherwise return default."""
+        if self.cover:
+            return self.cover
+        else:
+            return "default_cover.jpg"
+
     def __str__(self):
         """Return the user's album name."""
         return "{}'s album of {}".format(self.owner.username, self.title)

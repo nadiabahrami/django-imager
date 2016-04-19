@@ -1,18 +1,35 @@
 {% load thumbnail %}
+{% load staticfiles %}
 <h1>Welcome to the Library</h1>
 <p>{{imgs}}</p>
 <p>{{albums}}</p>
 
-{%for album in albums%}
+<!-- {%for album in albums%}
 <p>{{album}}</p>
-<p>{{album.cover}}</p>
-    {% thumbnail album.cover.photo_file "100x100" as al_cover%}
+<p>{{album.get_cover}}</p>
+    {% thumbnail album.get_cover.photo_file "100x100" as al_cover%}
         <p>{{al_cover}}</p>
         <img src="{{ al_cover.url }}"width="{{al_cover.x}}" height="{{al_cover.y}}"/>
     {% empty %}
-        <p>No photos Found</p>
+        <p>No albums Found</p>
     {% endthumbnail %}
+{% endfor %} -->
+<h1>Albums</h1>
+{%for album in albums%}
+    <p>{{album}}</p>
+    {% if album.cover %}
+        {% thumbnail album.cover.photo_file "100x100" as al_cover%}
+            <img src="{{ al_cover.url }}"width="{{al_cover.x}}" height="{{al_cover.y}}"/>
+        {% empty %}
+            <p>No albums Found</p>
+        {% endthumbnail %}
+    {% else %}
+        <img src="{% static 'default_cover.jpg' %}" width="100" height="100"/>
+    {% endif %}
 {% endfor %}
+
+<h1>Photos</h1>
+
 
 {%for photo in imgs%}
 <p>{{photo}}</p>
