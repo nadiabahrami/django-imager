@@ -2,6 +2,7 @@ from django.db import models
 # from django.contrib.auth.models import User
 from django.utils.encoding import python_2_unicode_compatible
 from django.conf import settings
+from django.forms import ModelForm
 
 
 PHOTO_ACCESS_CHOICES = (
@@ -89,3 +90,17 @@ class Album(models.Model):
     def __str__(self):
         """Return the user's album name."""
         return "{}'s album of {}".format(self.owner.username, self.title)
+
+
+class CreateAlbum(ModelForm):
+
+    class Meta:
+        model = Album
+        fields = ['title', 'description', 'pictures', 'cover', 'published']
+
+
+class AddPhoto(ModelForm):
+    
+    class Meta:
+        model = Photo
+        fields = ['title', 'description', 'photo_file', 'published']
