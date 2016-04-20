@@ -1,14 +1,15 @@
-{#{% extends 'library_base.html' %}#}
+{# {% extends 'library_base.html' %} #}
 {% load thumbnail %}
 {% load staticfiles %}
-<header>
+<!-- {% block content %} -->
     <h1>Welcome to the Library</h1>
     <nav>
         <a href="/images/albums/add/">Create an Album</a> | <a href="/images/photos/add/">Add a Photo</a>
     </nav>
-</header>
+<!-- {% endblock %} -->
 <!-- <p>{{imgs}}</p>
 <p>{{albums}}</p> -->
+<!-- {% block thumbnails %} -->
 <div>
     <h2>Albums</h2>
     <section>
@@ -42,3 +43,4 @@
         {% endfor %}
     </section>
 </div>
+<!-- {% endblock %} -->
