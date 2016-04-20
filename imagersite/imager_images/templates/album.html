@@ -24,7 +24,6 @@
                 <!-- Header -->
                     <header id="header">
                         <h1>Welcome <a href="/profile/" target="_self">{{ user.username }}</a> to your album view.</h1>
-
 {#                      <ul class="icons">#}
 {#                          <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>#}
 {#                          <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>#}
@@ -62,6 +61,26 @@
                                 <a href="/accounts/login/">Log In</a> | <a href="/accounts/register/">Register</a>
                             {% endif %}
                         </article>
+                            {% if Album.cover %}
+                                <a class="thumbnail" href="{{ Album.cover.photo_file.url }}" data-position="left center"><img src="{{ Album.cover.photo_file.url }}" alt="" /></a>
+                                <h2>{{ Album.title }}</h2>
+                                <p>{{ Album.description }}</p>
+                            {% else %}
+                                <a class="thumbnail" href="{% static "default_img.jpg" %}" data-position="left center"><img src="{% static "default_img.jpg" %}" alt="" /></a>
+                                <h2>Untitled Album Cover</h2>
+                                <p>You may need to add a desciption to your Album</p>
+                            {% endif %}
+                        </article>
+
+{#                        <article>#}
+{#                            {% for a_photo in Album.pictures %}#}
+{#                              <a class="thumbnail" href="images/fulls/02.jpg"><img src="images/thumbs/02.jpg" alt="" /></a>#}
+{#                              <h2>Vivamus convallis libero</h2>#}
+{#                              <p>Sed velit lacus, laoreet at venenatis convallis in lorem tincidunt.</p>#}
+{#                            {% endfor %}#}
+{#                        </article>#}
+{#
+>>>>>>> Stashed changes
                     </section>
 
                 <!-- Footer -->
