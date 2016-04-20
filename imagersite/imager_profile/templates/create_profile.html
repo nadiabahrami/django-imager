@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'site_base.html' %}
 {% block content %}
     <h1>Welcome {% if user.is_authenticated %}<a href="/profile/" target="_self">{{ user.username }}</a>{% endif %} to the IMAGER website.</h1>
     {% if user.is_authenticated %}
