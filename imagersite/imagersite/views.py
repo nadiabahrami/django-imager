@@ -1,37 +1,29 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals
-from django.http import HttpResponse
-from django.template import loader
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
+from django.template import loader
 from django.views.generic import TemplateView
-
-
-def home_page(request, *args, **kwargs):
-    # kwargstring = argstring = ""
-    # if args:
-    #     argstring = "args: {}".format(", ".join(args))
-    # if kwargs:
-    #     kwargstring = "kwargs:\n{}".format(
-    #         "".join(["\t {}: {} \n".format(key, val) for key, val in kwargs.items()])
-    #     )
-    # body = """
-    #         Home page body was called with:
-    #         {}
-    #         {}
-    #         """.format(argstring, kwargstring)
-    # return HttpResponse(body)
-    #___________________________________________
-    # template = loader.get_template('home.html')
-    # foo = 'dude'
-    # body = template.render({'foo': foo})
-    # return HttpResponse(body)
-    foo = 'dude'
-    return render(request, 'home.html', context={'foo': foo})
+from imager_images.models import Photo
+from registration.backends.simple.views import RegistrationView
+# from .forms import RegisterForm
+# from django.contrib.auth.forms import UserCreationForm
 
 
 class ClassView(TemplateView):
     template_name = 'home.html'
 
-    def get_context_data(self, id):
-        foo = 'garbanzo beans'
-        return {'foo': foo}
+    def get_context_data(self):
+        """Return a random public photo for homepage."""
+        # for each in Photo.public.all():
+        #     print(each)
+        try:
+            random_photo = Photo.public.filter(published__contains='public').order_by("?")[:1][0]
+        except IndexError:
+            random_photo = False
+        return {'random_photo': random_photo}
+
+
+# class MyRegistrationView(RegistrationView):
+#     def get_success_url(self, request, user):
+#         return "/home/"

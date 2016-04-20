@@ -84,6 +84,10 @@ class ProfileTestCase(TestCase):
         self.user.save()
         self.assertNotIn(self.user.profile, UserProfile.active.all())
 
+    def test_profile_string(self):
+        """Assert that the sting from profile is correct."""
+        self.assertEquals(str(self.user.profile), "bob's profile")
+
 
 class DeleteTheDude(ProfileTestCase):
     """Define a class that deletes my bob."""

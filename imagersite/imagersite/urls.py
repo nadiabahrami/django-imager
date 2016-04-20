@@ -14,17 +14,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import include, url
+from django.conf import settings
 from django.contrib import admin
-from .views import home_page
 from .views import ClassView
 from django.views.generic import TemplateView
+from django.conf.urls.static import static
+
 
 urlpatterns = [
-    url(r'^profile/', include('imager_profile.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^images/', include('imager_images.urls')),
-    # url(r'^$', home_page, name='home_page'),
-    # url(r'^home/(?P<id>[0-9]+)$', home_page, name='home_page'),
-    # url(r'^home/(?P<id>[0-9]+)$', ClassView.as_view(), name='home_page'),
-    url(r'^home/(?P<id>[0-9]+)$', TemplateView.as_view(template_name="home.html"), name='home_page'),
-]  # regular expression paht is first., is handed to second which is adminConf
+    url(r'^profile/', include('imager_profile.urls')),
+    url(r'^home/', ClassView.as_view(), name='home_page'),
+    # url(r'^login/', ClassView.as_view(), name='home_page'),
+    # url(r'^accounts/profile/$', MyRegistrationView.as_view(), name='registration_register'),
+    url(r'^accounts/', include('registration.backends.hmac.urls')),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )
