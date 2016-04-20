@@ -1,4 +1,6 @@
 {% extends 'site_base.html' %}
+{% load staticfiles %}
+
 {% block content %}
     <h1>IMAGER registration.</h1>
     <form action="." method='POST'>
@@ -10,4 +12,18 @@
         <input type="submit" value="Submit"/>
     </form>
     <a href="/">Home</a>
+{% endblock %}
+
+{% block thumbnails %}
+    <article>
+        {% if random_photo %}
+            <a class="thumbnail" href="{{ random_photo.photo_file.url }}" data-position="left center"></a>
+            <h2>{{ random_photo.title }}</h2>
+            <p>{{ random_photo.description }}</p>
+        {% else %}
+            <a class="thumbnail" href="{% static "default_img.jpg" %}" data-position="left center"></a>
+            <h2>Image of the moment</h2>
+            <p>I believe life is an intelligent thing: that things aren't random. ~Steve Jobs</p>
+        {% endif %}
+    </article>
 {% endblock %}
