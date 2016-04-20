@@ -41,6 +41,7 @@ class PhotoView(DetailView):
 
 def add_album(request):
     form = CreateAlbum(request.POST, request.FILES)
+    form.fields['pictures'].queryset = request.user.photo
     if request.method == 'POST':
         if form.is_valid():
             form.instance.owner = request.user
@@ -56,3 +57,9 @@ def add_photo(request):
             form.save()
     return render(request, 'add_photo.html', context={'form': form})
 
+
+# def edit_album(request):
+#     form = 
+
+
+# def edit_photo(request):

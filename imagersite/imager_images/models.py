@@ -25,11 +25,6 @@ class PhotoManager(models.Manager):
         qs = super(PhotoManager, self).get_queryset()
         return qs.all()
 
-    # def get_queryset(self):
-    #     """Return a list of all active users."""
-    #     qs = super(ActiveProfileManager, self).get_queryset()
-    #     return qs.filter(user__is_active__exact=True)
-
 
 @python_2_unicode_compatible
 class Photo(models.Model):
@@ -100,7 +95,7 @@ class CreateAlbum(ModelForm):
 
 
 class AddPhoto(ModelForm):
-    
+
     class Meta:
         model = Photo
         fields = ['title', 'description', 'photo_file', 'published']
