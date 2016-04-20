@@ -49,6 +49,24 @@ def add_album(request):
     return render(request, 'create_album.html', context={'form': form})
 
 
+def edit_album(request, pk_album):
+    # TODO: Finish this form
+    try:
+        pk_album = CreateAlbum.objects.get(id=request.POST.get(pk=None))
+    except CreateAlbum.DoesNotExist:
+        pk_album = None
+
+    form = CreateAlbum(request.POST, request.FILES)
+    form.fields['pictures'].queryset = request.user.photo
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.instance.owner = request.user
+            form.save()
+    return render(request, 'create_album.html', context={'form': form})
+
+
+
 def add_photo(request):
     form = AddPhoto(request.POST, request.FILES)
     if request.method == 'POST':
@@ -58,8 +76,10 @@ def add_photo(request):
     return render(request, 'add_photo.html', context={'form': form})
 
 
-# def edit_album(request):
-#     form = 
-
-
 # def edit_photo(request):
+#     form = AddPhoto(request.POST, request.FILES)
+#     if request.method == 'POST':
+#         if form.is_valid():
+#             form.instance.owner = request.user
+#             form.save()
+#     return render(request, 'add_photo.html', context={'form': form})
