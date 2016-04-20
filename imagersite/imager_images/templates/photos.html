@@ -2,29 +2,27 @@
 {% load staticfiles %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <h1>Photo Detail.</h1>
+    <h1>Photo Detail.</h1>
+    <h2>"{{ photo.title }}"</h2>
+    <!-- Navigation -->
+    <div>
+        {% if user.is_authenticated %}User: <a href="/profile/" target="_self">{{user.username}}</a><br>{% endif %}
 
-        <!-- Navigation -->
-        <div>
-            {% if user.is_authenticated %}User: <a href="/profile/" target="_self">{{user.username}}</a><br>{% endif %}
+        {% if user.is_authenticated %}
+            <a href="/images/library/">Photo library</a> | <a href="/accounts/logout/">Log out</a>
+        {% else %}
+            <a href="/accounts/login/">Log in</a> | <a href="/accounts/register/">Register</a>
+        {% endif %}
+    </div>
+    <!-- End Navigation -->
 
-            {% if user.is_authenticated %}
-                <a href="/images/library/">Photo library</a> | <a href="/accounts/logout/">Log out</a>
-            {% else %}
-                <a href="/accounts/login/">Log in</a> | <a href="/accounts/register/">Register</a>
-            {% endif %}
-        </div>
-        <!-- End Navigation -->
+    <p>Title: <strong>{{ photo.title }}</strong></p>
+    <p>Description: <strong>{{ photo.description }}</strong></p>
+    <p>Date Uploaded: <strong>{{ photo.date_uploaded }}</strong></p>
+    <p>Date Modified: <strong>{{ photo.date_modified }}</strong></p>
+    <p>Photo Status: <strong>{{ photo.published }}</strong></p>
+    <p>Date Published: <strong>{{ photo.date_published }}</strong></p>
 
-        <p>Title: <strong>{{ photo.title}}</strong></p>
-        <p>Description: <strong>{{ photo.description }}</strong></p>
-        <p>Date Uploaded: <strong>{{ photo.date_uploaded }}</strong></p>
-        <p>Date Modified: <strong>{{ photo.date_modified }}</strong></p>
-        <p>Photo Status: <strong>{{ photo.published}}</strong></p>
-        <p>Date Published: <strong>{{ photo.date_published}}</strong></p>
-
-    {% endif %}
 {% endblock %}
 
 {% block thumbnails %}

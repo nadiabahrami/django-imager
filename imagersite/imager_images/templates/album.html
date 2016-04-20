@@ -1,102 +1,45 @@
+{% extends 'site_base.html' %}
 {% load staticfiles %}
-<!DOCTYPE HTML>
-<!--
-    Lens by HTML5 UP
-    html5up.net | @n33co
-    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-    <head>
-        <title>IMAGER Website</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!--[if lte IE 8]><script src="{% static "assets/js/ie/html5shiv.js" %}"></script><![endif]-->
-        <link rel="stylesheet" href="{% static "assets/css/main.css" %}" />
-        <!--[if lte IE 8]><link rel="stylesheet" href="{% static "assets/css/ie8.css" %}" /><![endif]-->
-        <!--[if lte IE 9]><link rel="stylesheet" href="{% static "assets/css/ie9.css" %}" /><![endif]-->
-        <noscript><link rel="stylesheet" href="{% static "assets/css/noscript.css" %}" /></noscript>
-    </head>
-    <body class="is-loading-0 is-loading-1 is-loading-2">
 
-        <!-- Main -->
-            <div id="main">
+{% block content %}
+    <h1>Album Detail.</h1>
+    {% if album.title %}<h2>"{{ album.title }}"</h2>{% endif %}
 
-                <!-- Header -->
-                    <header id="header">
-                        <h1>Welcome <a href="/profile/" target="_self">{{ user.username }}</a> to your album view.</h1>
-{#                      <ul class="icons">#}
-{#                          <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>#}
-{#                          <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>#}
-{#                          <li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>#}
-{#                          <li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>#}
-{#                      </ul>#}
-                    </header>
+    <!-- Navigation -->
+    <div>
+        {% if user.is_authenticated %}User: <a href="/profile/" target="_self">{{user.username}}</a><br>{% endif %}
 
-                <!-- Thumbnail -->
-                    <section id="thumbnails">
-                        <article>
-                            {% if album.cover %}
-                                <a class="thumbnail" href="{{ album.cover.photo_file.url }}" data-position="left center"><img src="{{ album.cover.photo_file.url }}" alt="" /></a>
-                                <h2>{{ album.title }}</h2>
-                                <p>{{ album.description }}</p>
-                            {% else %}
-                                <a class="thumbnail" href="{% static "default_cover.jpg" %}" data-position="left center"><img src="{% static "default_cover.jpg" %}" alt="" /></a>
-                                <h2>Album Cover Default</h2>
-                                <p>Select a cover photo to change this.</p>
-                            {% endif %}
-                        </article>
-                        {% for pic in album.pictures.all %}
-                            <article>
-                                <a class="thumbnail" href="{{pic.photo_file.url}}"><img src="{{pic.photo_file.url}}" alt="" /></a>
-                                <h2>{{pic.title}}</h2>
-                                <p>{{pic.description}}</p>
-                             </article>
-                        {% endfor %}
-                    </section>
-                    <section>
-                        <article>
-                            {% if user.is_authenticated %}
-                                <a href="/images/library/">Photo Library</a> | <a href="/accounts/logout/">Log Out</a>
-                            {% else %}
-                                <a href="/accounts/login/">Log In</a> | <a href="/accounts/register/">Register</a>
-                            {% endif %}
-                        </article>
-                            {% if Album.cover %}
-                                <a class="thumbnail" href="{{ Album.cover.photo_file.url }}" data-position="left center"><img src="{{ Album.cover.photo_file.url }}" alt="" /></a>
-                                <h2>{{ Album.title }}</h2>
-                                <p>{{ Album.description }}</p>
-                            {% else %}
-                                <a class="thumbnail" href="{% static "default_img.jpg" %}" data-position="left center"><img src="{% static "default_img.jpg" %}" alt="" /></a>
-                                <h2>Untitled Album Cover</h2>
-                                <p>You may need to add a desciption to your Album</p>
-                            {% endif %}
-                        </article>
+        {% if user.is_authenticated %}
+            <a href="/images/library/">Photo library</a> | <a href="/accounts/logout/">Log out</a>
+        {% else %}
+            <a href="/accounts/login/">Log in</a> | <a href="/accounts/register/">Register</a>
+        {% endif %}
+    </div>
+    <!-- End Navigation -->
 
-{#                        <article>#}
-{#                            {% for a_photo in Album.pictures %}#}
-{#                              <a class="thumbnail" href="images/fulls/02.jpg"><img src="images/thumbs/02.jpg" alt="" /></a>#}
-{#                              <h2>Vivamus convallis libero</h2>#}
-{#                              <p>Sed velit lacus, laoreet at venenatis convallis in lorem tincidunt.</p>#}
-{#                            {% endfor %}#}
-{#                        </article>#}
-{#
->>>>>>> Stashed changes
-                    </section>
+{% endblock %}
 
-                <!-- Footer -->
-                    <footer id="footer">
-                        <ul class="copyright">
-                            <li>&copy; Untitled.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a>.</li>
-                        </ul>
-                    </footer>
+{% block thumbnails %}
+    <article>
+        {% if album.cover %}
+            <a class="thumbnail" href="{{ album.cover.photo_file.url }}" data-position="left center"><img src="{{ album.cover.photo_file.url }}" alt="" /></a>
+            <h2>{{ album.title }}</h2>
+            <p>{{ album.description }}</p>
+        {% else %}
+            <a class="thumbnail" href="{% static "default_cover.jpg" %}" data-position="left center"><img src="{% static "default_cover.jpg" %}" alt="" /></a>
+            <h2>Album Cover Default</h2>
+            <p>Select a cover photo to change this.</p>
+        {% endif %}
+    </article>
 
-            </div>
-
-        <!-- Scripts -->
-            <script src="{% static "assets/js/jquery.min.js" %}"></script>
-            <script src="{% static "assets/js/skel.min.js" %}"></script>
-            <!--[if lte IE 8]><script src="{% static "assets/js/ie/respond.min.js" %}"></script><![endif]-->
-            <script src="{% static "assets/js/main.js" %}"></script>
-
-    </body>
-</html>
+    {% for pic in album.pictures.all %}
+{#  TODO: ignore if cover is in pictures.all #}
+{#        {% ifnotequal album.cover.title pic.title %}#}
+            <article>
+                <a class="thumbnail" href="{{ pic.photo_file.url }}"><img src="{{ pic.photo_file.url }}" alt="" /></a>
+                <h2>{{ pic.title }}</h2>
+                <p>{{ pic.description }}</p>
+             </article>
+{#        {% endifnotequal %}#}
+    {% endfor %}
+{% endblock %}
