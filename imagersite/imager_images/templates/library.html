@@ -36,7 +36,7 @@
 <p>{{photo.photo_file}}</p>
     {% thumbnail photo.photo_file "100x100" as img%}
         <p>{{img}}</p>
-        <img src="{{ img.url }}"width="{{img.x}}" height="{{img.y}}"/>
+        <a href="/images/photos/{{user.pk}}/{{photo.pk}}"><img src="{{ img.url }}"width="{{img.x}}" height="{{img.y}}"/></a>
     {% empty %}
         <p>No photos Found</p>
     {% endthumbnail %}

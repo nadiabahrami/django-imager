@@ -23,7 +23,21 @@
 
                 <!-- Header -->
                     <header id="header">
-                        <h1>Welcome <a href="/profile/" target="_self">{{ user.username }}</a> to your album view.</h1>
+
+                        {% if user.is_authenticated %}
+                            <h1>Welcome <a href="/profile/" target="_self">{{ user.username }}</a> to your photo detail view.</h1>
+                            <p>Title: <strong>{{ photo.title}}</strong> </p>
+                            <p>Description: <strong>{{ photo.description }}</strong></p>
+                            <p>Date Uploaded: <strong>{{ photo.date_uploaded }}</strong> </p>
+                            <p>Date Modified: <strong>{{ photo.date_modified }}</strong> </p>
+                            <p>Photo Status: <strong>{{ photo.published}}</strong> </p>
+                            <p>Date Published: <strong>{{ photo.date_published}}</strong> </p>
+                            {% if user.is_authenticated %}
+                                <a href="/images/library/">Photo Library</a> | <a href="/accounts/logout/">Log Out</a>
+                            {% else %}
+                                <a href="/accounts/login/">Log In</a> | <a href="/accounts/register/">Register</a>
+                            {% endif %}
+                        {% endif %}
 
 {#                      <ul class="icons">#}
 {#                          <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>#}
@@ -36,38 +50,22 @@
                 <!-- Thumbnail -->
                     <section id="thumbnails">
                         <article>
-                            {% if album.cover %}
-                                <a class="thumbnail" href="{{ album.cover.photo_file.url }}" data-position="left center"><img src="{{ album.cover.photo_file.url }}" alt="" /></a>
-                                <h2>{{ album.title }}</h2>
-                                <p>{{ album.description }}</p>
+                            {% if photo %}
+                                <a class="thumbnail" href="{{ photo.photo_file.url }}" data-position="left center"><img src="{{ photo.photo_file.url }}" alt="" /></a>
+                                <h2>{{ photo.title }}</h2>
+                                <p>{{ photo.description }}</p>
                             {% else %}
                                 <a class="thumbnail" href="{% static "default_cover.jpg" %}" data-position="left center"><img src="{% static "default_cover.jpg" %}" alt="" /></a>
-                                <h2>Album Cover Default</h2>
-                                <p>Select a cover photo to change this.</p>
-                            {% endif %}
-                        </article>
-                    </section>
-                    <section id="thumbnails">
-                        {% for pic in album.pictures.all %}
-                            <article>
-                                <a class="thumbnail" href="{{pic.photo_file.url}}"><img src="{{pic.photo_file.url}}" alt="" /></a>
-                                <h2>{{pic.title}}</h2>
-                                <p>{{pic.description}}</p>
-                             </article>
-                        {% endfor %}
-                    </section>
-                    <section>
-                        <article>
-                            {% if user.is_authenticated %}
-                                <a href="/images/library/">Photo Library</a> | <a href="/accounts/logout/">Log Out</a>
-                            {% else %}
-                                <a href="/accounts/login/">Log In</a> | <a href="/accounts/register/">Register</a>
+                                <h2>No Photo Found</h2>
+                                <p>Go upload a photo to change this.</p>
                             {% endif %}
                         </article>
                     </section>
 
                 <!-- Footer -->
                     <footer id="footer">
+                        <p>{{album}}</p>
+                        <p>{{album.cover}}</p>
                         <ul class="copyright">
                             <li>&copy; Untitled.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a>.</li>
                         </ul>

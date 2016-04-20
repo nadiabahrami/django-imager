@@ -22,6 +22,16 @@ class AlbumView(DetailView):
 
     def get_context_data(self, **kwargs):
         """Return a random public photo for homepage."""
-        user = self.request.user
         context = super(AlbumView, self).get_context_data(**kwargs)
+        return context
+
+
+class PhotoView(DetailView):
+    template_name = 'photos.html'
+
+    model = Photo
+
+    def get_context_data(self, **kwargs):
+        """Return a random public photo for homepage."""
+        context = super(PhotoView, self).get_context_data(**kwargs)
         return context
