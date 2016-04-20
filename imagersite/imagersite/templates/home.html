@@ -2,20 +2,26 @@
 {% load staticfiles %}
 
 {% block content %}
-    <h1>Welcome {% if user.is_authenticated %}<a href="/profile/" target="_self">{{user.username}}</a>{% endif %} to the IMAGER website.</h1>
+    <h1>Welcome to the IMAGER website.</h1>
 
-    {% if user.is_authenticated %}
-        <a href="/accounts/logout/">Log Out</a>
-    {% else %}
-        <a href="/accounts/login/">Log In</a> | <a href="/accounts/register/">Register</a>
-    {% endif %}
+    <!-- Navigation -->
+    <div>
+        {% if user.is_authenticated %}User: <a href="/profile/" target="_self">{{user.username}}</a><br>{% endif %}
 
-    <ul class="icons">
-        <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
-        <li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
-    </ul>
+        {% if user.is_authenticated %}
+            <a href="/images/library/">Photo library</a> | <a href="/accounts/logout/">Log out</a>
+        {% else %}
+            <a href="/accounts/login/">Log in</a> | <a href="/accounts/register/">Register</a>
+        {% endif %}
+    </div>
+    <!-- End Navigation -->
+
+{#    <ul class="icons">#}
+{#        <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>#}
+{#        <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>#}
+{#        <li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>#}
+{#        <li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>#}
+{#    </ul>#}
 {% endblock %}
 
 {% block thumbnails %}

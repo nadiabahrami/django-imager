@@ -1,83 +1,42 @@
+{% extends 'site_base.html' %}
 {% load staticfiles %}
-<!DOCTYPE HTML>
-<!--
-    Lens by HTML5 UP
-    html5up.net | @n33co
-    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-    <head>
-        <title>IMAGER Website</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!--[if lte IE 8]><script src="{% static "assets/js/ie/html5shiv.js" %}"></script><![endif]-->
-        <link rel="stylesheet" href="{% static "assets/css/main.css" %}" />
-        <!--[if lte IE 8]><link rel="stylesheet" href="{% static "assets/css/ie8.css" %}" /><![endif]-->
-        <!--[if lte IE 9]><link rel="stylesheet" href="{% static "assets/css/ie9.css" %}" /><![endif]-->
-        <noscript><link rel="stylesheet" href="{% static "assets/css/noscript.css" %}" /></noscript>
-    </head>
-    <body class="is-loading-0 is-loading-1 is-loading-2">
 
-        <!-- Main -->
-            <div id="main">
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Photo Detail.</h1>
 
-                <!-- Header -->
-                    <header id="header">
+        <!-- Navigation -->
+        <div>
+            {% if user.is_authenticated %}User: <a href="/profile/" target="_self">{{user.username}}</a><br>{% endif %}
 
-                        {% if user.is_authenticated %}
-                            <h1>Welcome <a href="/profile/" target="_self">{{ user.username }}</a> to your photo detail view.</h1>
-                            <p>Title: <strong>{{ photo.title}}</strong> </p>
-                            <p>Description: <strong>{{ photo.description }}</strong></p>
-                            <p>Date Uploaded: <strong>{{ photo.date_uploaded }}</strong> </p>
-                            <p>Date Modified: <strong>{{ photo.date_modified }}</strong> </p>
-                            <p>Photo Status: <strong>{{ photo.published}}</strong> </p>
-                            <p>Date Published: <strong>{{ photo.date_published}}</strong> </p>
-                            {% if user.is_authenticated %}
-                                <a href="/images/library/">Photo Library</a> | <a href="/accounts/logout/">Log Out</a>
-                            {% else %}
-                                <a href="/accounts/login/">Log In</a> | <a href="/accounts/register/">Register</a>
-                            {% endif %}
-                        {% endif %}
+            {% if user.is_authenticated %}
+                <a href="/images/library/">Photo library</a> | <a href="/accounts/logout/">Log out</a>
+            {% else %}
+                <a href="/accounts/login/">Log in</a> | <a href="/accounts/register/">Register</a>
+            {% endif %}
+        </div>
+        <!-- End Navigation -->
 
-{#                      <ul class="icons">#}
-{#                          <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>#}
-{#                          <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>#}
-{#                          <li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>#}
-{#                          <li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>#}
-{#                      </ul>#}
-                    </header>
+        <p>Title: <strong>{{ photo.title}}</strong></p>
+        <p>Description: <strong>{{ photo.description }}</strong></p>
+        <p>Date Uploaded: <strong>{{ photo.date_uploaded }}</strong></p>
+        <p>Date Modified: <strong>{{ photo.date_modified }}</strong></p>
+        <p>Photo Status: <strong>{{ photo.published}}</strong></p>
+        <p>Date Published: <strong>{{ photo.date_published}}</strong></p>
 
-                <!-- Thumbnail -->
-                    <section id="thumbnails">
-                        <article>
-                            {% if photo %}
-                                <a class="thumbnail" href="{{ photo.photo_file.url }}" data-position="left center"><img src="{{ photo.photo_file.url }}" alt="" /></a>
-                                <h2>{{ photo.title }}</h2>
-                                <p>{{ photo.description }}</p>
-                            {% else %}
-                                <a class="thumbnail" href="{% static "default_cover.jpg" %}" data-position="left center"><img src="{% static "default_cover.jpg" %}" alt="" /></a>
-                                <h2>No Photo Found</h2>
-                                <p>Go upload a photo to change this.</p>
-                            {% endif %}
-                        </article>
-                    </section>
+    {% endif %}
+{% endblock %}
 
-                <!-- Footer -->
-                    <footer id="footer">
-                        <p>{{album}}</p>
-                        <p>{{album.cover}}</p>
-                        <ul class="copyright">
-                            <li>&copy; Untitled.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a>.</li>
-                        </ul>
-                    </footer>
-
-            </div>
-
-        <!-- Scripts -->
-            <script src="{% static "assets/js/jquery.min.js" %}"></script>
-            <script src="{% static "assets/js/skel.min.js" %}"></script>
-            <!--[if lte IE 8]><script src="{% static "assets/js/ie/respond.min.js" %}"></script><![endif]-->
-            <script src="{% static "assets/js/main.js" %}"></script>
-
-    </body>
-</html>
+{% block thumbnails %}
+    <article>
+        {% if photo %}
+            <a class="thumbnail" href="{{ photo.photo_file.url }}" data-position="left center"></a>
+            <h2>{{ photo.title }}</h2>
+            <p>{{ photo.description }}</p>
+        {% else %}
+            <a class="thumbnail" href="{% static "default_cover.jpg" %}" data-position="left center"></a>
+            <h2>No Photo Found</h2>
+            <p>Go upload a photo to change this.</p>
+        {% endif %}
+    </article>
+{% endblock %}
