@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from imager_images.models import Photo, Album
-from imager_profile.models import UserProfile
+from imager_profile.models import UserProfile, EditProfile
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
 from django.shortcuts import render
@@ -19,15 +19,30 @@ class ProfileView(TemplateView):
 
 def edit_profile(request):
     if request.method == 'POST':
-        # user_album = UserProfile.all_albums.get()
-        # form = CreateAlbum(request.POST, instance=user_album)
-        # if form.is_valid():
-        #     form.instance.owner = request.user
-        #     form.save()
-        #     return HttpResponseRedirect('/profile/')
-        # return render(request, 'edit_album.html', context={'form': form})
-        pass
-    else:
-        user = UserProfile.objects.get(user=request.user)
-        form_profile = UserProfile(instance=user)
+        u = UserProfile.objects.get(user=request.user)
+        form_profile = EditProfile(request.POST, instance=u)
+        if form_profile.is_valid():
+            form_profile.instance.user = request.user
+            form_profile.save()
+            return HttpResponseRedirect('/profile/')
         return render(request, 'edit_profile.html', context={'form_profile': form_profile})
+    else:
+        u = UserProfile.objects.get(user=request.user)
+        form_profile = EditProfile(instance=u)
+        return render(request, 'edit_profile.html', context={'form_profile': form_profile})
+
+
+# def update_settings(request):
+#     if request.method== 'POST':
+#         u = UserProfile.objects.get(user=request.user)
+#         form = UserProfile(request.POST, instance=u)
+#         if form.is_valid():
+#             profile = form.save(commit=False)
+#             profile.user = request.user
+#             profile.save()
+#             return HttpResponseRedirect('/profile/')
+#         return render(request, 'edit_profile.html', context={'form_profile': form_profile})
+#     else:
+#         u = UserProfile.objects.get(user=request.user)
+#         form = UserProfileForm(instance=u) #No request.POST
+#         return render(request, 'edit_profile.html', context={'form_profile': form_profile})
