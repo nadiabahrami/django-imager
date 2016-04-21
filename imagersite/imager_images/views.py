@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
+from django.http import HttpResponseRedirect
 from imager_images.models import Photo, Album, CreateAlbum, AddPhoto
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
@@ -59,21 +61,29 @@ def add_album(request):
 
 def edit_album(request, pk):
     # TODO: Finish this form
-    # try:
-    #     pk_album = CreateAlbum.objects.get(id=request.POST.get(pk=pk))
-    # except:
-    #     pk_album = None
-
-
-    form = CreateAlbum(request.POST, request.FILES)
-    form.fields['pictures'].queryset = request.user.photo
-    form.fields['cover'].queryset = request.user.photo
-
+    # import pdb; pdb.set_trace()
     if request.method == 'POST':
+        try:
+            user_album = Album.all_albums.get(user=request.user)
+            form = CreateAlbum(request.POST, instance=user_album)
+        except ObjectDoesNotExist:
+            form = CreateAlbum(request.POST, request.FILES)
+            form.fields['pictures'].queryset = request.user.photo
+            form.fields['cover'].queryset = request.user.photo
+
         if form.is_valid():
             form.instance.owner = request.user
             form.save()
-    return render(request, 'create_album.html', context={'form': form})
+            return HttpResponseRedirect('/library/')
+    else:
+        try:
+            user_album = Album.all_albums.get(request.kwargs['pk'])
+            form = CreateAlbum(request.POST, instance=user_album)
+        except ObjectDoesNotExist:
+            form = CreateAlbum(request.POST, request.FILES)
+            form.fields['pictures'].queryset = request.user.photo
+            form.fields['cover'].queryset = request.user.photo
+        return render(request, 'edit_album.html', context={'form': form})
 
 
 def add_photo(request):
@@ -85,10 +95,10 @@ def add_photo(request):
     return render(request, 'add_photo.html', context={'form': form})
 
 
-# def edit_photo(request):
-#     form = AddPhoto(request.POST, request.FILES)
-#     if request.method == 'POST':
-#         if form.is_valid():
-#             form.instance.owner = request.user
-#             form.save()
-#     return render(request, 'add_photo.html', context={'form': form})
+def edit_photo(request):
+    form = AddPhoto(request.POST, request.FILES)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.instance.owner = request.user
+            form.save()
+    return render(request, 'edit_photo.html', context={'form': form})
