@@ -80,6 +80,8 @@ def edit_album(request, pk):
         try:
             user_album = Album.all_albums.get(id=pk)
             form = CreateAlbum(request.POST, instance=user_album)
+            form.fields['pictures'].queryset = request.user.photo
+            form.fields['cover'].queryset = request.user.photo
         except ObjectDoesNotExist:
             form = CreateAlbum(request.POST, request.FILES)
             form.fields['pictures'].queryset = request.user.photo
