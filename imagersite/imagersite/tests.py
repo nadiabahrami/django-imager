@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.test import TestCase
 from imager_profile.models import User
-
+from django.core.urlresolvers import resolve
 import factory
 
 
@@ -69,3 +69,8 @@ class ImagerSiteTests(TestCase):
         """Test that the logout route is valid."""
         response = self.client.get("/accounts/logout/", {})
         self.assertEquals(response.status_code, 200)
+
+    def test_profile_view(self):
+        """Test correct view is attached to correct URL."""
+        resolver = resolve('/')
+        self.assertEquals(resolver.view_name, 'home_page')
