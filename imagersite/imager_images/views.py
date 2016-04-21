@@ -53,13 +53,6 @@ def add_album(request):
     return render(request, 'create_album.html', context={'form': form})
 
 
-# TODO: From class notes, Selena
-# def get_object(self, queryset=None)
-# try:
-#     return super(AddOrEditContent, self).get_object(queryset)
-# except AttributeError:
-#     return
-
 def edit_album(request, pk):
     if request.method == 'POST':
         user_album = Album.all_albums.get(id=pk)
@@ -73,7 +66,7 @@ def edit_album(request, pk):
         return render(request, 'edit_album.html', context={'form': form})
     else:
         user_album = Album.all_albums.get(id=pk)
-        form = CreateAlbum(request.POST, instance=user_album)
+        form = CreateAlbum(instance=user_album)
         form.fields['pictures'].queryset = request.user.photo
         form.fields['cover'].queryset = request.user.photo
         return render(request, 'edit_album.html', context={'form': form})
@@ -100,5 +93,5 @@ def edit_photo(request, pk):
         return render(request, 'edit_photo.html', context={'form': form})
     else:
         user_photo = Photo.public.get(id=pk)
-        form = AddPhoto(request.POST, instance=user_photo)
+        form = AddPhoto(instance=user_photo)
         return render(request, 'edit_photo.html', context={'form': form})
