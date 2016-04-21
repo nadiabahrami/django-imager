@@ -64,7 +64,7 @@ def edit_album(request, pk):
     # import pdb; pdb.set_trace()
     if request.method == 'POST':
         try:
-            user_album = Album.all_albums.get(user=request.user)
+            user_album = Album.all_albums.get(id=pk)
             form = CreateAlbum(request.POST, instance=user_album)
         except ObjectDoesNotExist:
             form = CreateAlbum(request.POST, request.FILES)
@@ -77,7 +77,7 @@ def edit_album(request, pk):
             return HttpResponseRedirect('/library/')
     else:
         try:
-            user_album = Album.all_albums.get(request.kwargs['pk'])
+            user_album = Album.all_albums.get(id=pk)
             form = CreateAlbum(request.POST, instance=user_album)
         except ObjectDoesNotExist:
             form = CreateAlbum(request.POST, request.FILES)
