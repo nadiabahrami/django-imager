@@ -22,10 +22,7 @@
 {% block thumbnails %}
     <article>
         {% if album.cover %}
-            {% thumbnail album.cover.photo_file as image %}
-                <a class="thumbnail" href="{{ image.url }}" data-position="left center"><img src="{{ image.url }}" alt="" /></a>
-            {% endthumbnail %}
-{#                <a class="thumbnail" href="{{ album.cover.photo_file.url }}" data-position="left center"><img src="{{ album.cover.photo_file.url }}" alt="" /></a>#}
+              <a class="thumbnail" href="{{ album.cover.photo_file.url }}" data-position="left center"><img src="{{ album.cover.photo_file.url }}" alt="" /></a>
             <h2>{{ album.title }}</h2>
             <p>{{ album.description }}</p>
         {% else %}
@@ -34,15 +31,4 @@
             <p>Select a cover photo to change this.</p>
         {% endif %}
     </article>
-
-    {% for pic in album.pictures.all %}
-{#  TODO: ignore if cover is in pictures.all #}
-{#        {% ifnotequal album.cover.title pic.title %}#}
-            <article>
-                <a class="thumbnail" href="{{ pic.photo_file.url }}"><img src="{{ pic.photo_file.url }}" alt="" /></a>
-                <h2>{{ pic.title }}</h2>
-                <p>{{ pic.description }}</p>
-             </article>
-{#        {% endifnotequal %}#}
-    {% endfor %}
 {% endblock %}
