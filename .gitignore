@@ -6,6 +6,8 @@ __pycache__/
 
 # C extensions
 *.so
+*.DS_Store
+/*.DS_Store
 
 # Distribution / packaging
 /bin
@@ -25,6 +27,7 @@ parts/
 sdist/
 var/
 /sample_template
+/imagersite/.idea
 *.egg-info/
 .installed.cfg
 *.egg

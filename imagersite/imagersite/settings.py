@@ -34,13 +34,14 @@ ACCOUNT_ACTIVATION_DAYS = 7
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/home/'
+LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/profile/'
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'imager_profile',
+    'sorl.thumbnail',
     'imager_images',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -66,7 +67,9 @@ ROOT_URLCONF = 'imagersite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'imagersite', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'imagersite', 'templates'),
+                 os.path.join(BASE_DIR, 'imager_profile', 'templates'),
+                 os.path.join(BASE_DIR, 'imager_images', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,7 +82,18 @@ TEMPLATES = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'image_cache_table',
+    }
+}
 
+THUMBNAIL_DEBUG = True
+
+# THUMBNAIL_CONVERT
+
+# THUMBNAIL_IDENTIFY
 
 WSGI_APPLICATION = 'imagersite.wsgi.application'
 

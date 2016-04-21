@@ -2,6 +2,7 @@
 from django.test import TestCase
 import factory
 from imager_profile.models import User, UserProfile
+from django.core.urlresolvers import resolve
 
 
 class ProfileTestCase2(TestCase):
@@ -104,3 +105,35 @@ class DeleteTheDude(ProfileTestCase):
     def test_all_active2(self):
         """Assert that there are no entries that are active."""
         self.assertEquals(len(UserProfile.active.all()), 0)
+
+
+class AuthenticatedImageSiteTests(TestCase):
+    """Define a class with a series of profile tests."""
+
+    def setUp(self):
+        """Instance setup factory."""
+        self.user = UserFactory.create()
+        self.user.set_password('secret')
+        self.user.save()
+
+    def test_register(self):  # WTF  WHY NOT 200?  Why 302
+        """Test that the register route is valid."""
+        response = self.client.get("/profile/", {})
+        self.assertEquals(response.status_code, 200)
+
+    def test_edit_profile_view(self):
+        """Test correct view is attached to correct URL."""
+        resolver = resolve('/profile/edit/')
+        self.assertEquals(resolver.view_name, 'edit_profile')
+
+    def test_profile_view(self):
+        """Test correct view is attached to correct URL."""
+        resolver = resolve('/profile/')
+        self.assertEquals(resolver.view_name, 'profile_view')
+
+    # def test_login_post_invalid(self):
+    #     """Test if the user is in the DB, with invalid login."""
+    #     response = self.client.post("/accounts/login/",
+    #                                 {"username": "bob", "password": "wrongpassword"})
+    #     self.assertNotEquals(response.status_code, 302)
+    #     self.assertEquals(response.status_code, 200)

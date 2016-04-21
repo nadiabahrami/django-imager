@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block content %}
-    <h1>Welcome to the IMAGER website.</h1>
+    <h1>Edit Profile.</h1>
 
     <!-- Navigation -->
     <div>
@@ -16,12 +16,12 @@
     </div>
     <!-- End Navigation -->
 
-{#    <ul class="icons">#}
-{#        <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>#}
-{#        <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>#}
-{#        <li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>#}
-{#        <li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>#}
-{#    </ul>#}
+    <form action ="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form_user.as_p }}
+        {{ form_profile.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
 {% endblock %}
 
 {% block thumbnails %}
@@ -37,4 +37,3 @@
         {% endif %}
     </article>
 {% endblock %}
-

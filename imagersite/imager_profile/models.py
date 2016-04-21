@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.encoding import python_2_unicode_compatible
 from django.conf import settings
+from django.forms import ModelForm
 
 
 class ActiveProfileManager(models.Manager):
@@ -55,3 +56,23 @@ class UserProfile(models.Model):
     def __str__(self):
         """Hand back username's profile."""
         return "{}'s profile".format(self.user.username)
+
+
+class EditUser(ModelForm):
+    """Define the EditUser ModelForm."""
+
+    class Meta:
+        """Define the Meta data for the form class."""
+
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+
+class EditProfile(ModelForm):
+    """Define the EditUser ModelForm."""
+
+    class Meta:
+        """Define the Meta data for the form class."""
+
+        model = UserProfile
+        fields = ['camera_type', 'address', 'web_link', 'photo_type', 'social_media', 'region']
