@@ -1,46 +1,54 @@
-{# {% extends 'library_base.html' %} #}
 {% load thumbnail %}
 {% load staticfiles %}
-<!-- {% block content %} -->
-    <h1>Welcome to the Library</h1>
-    <nav>
-        <a href="/images/albums/add/">Create an Album</a> | <a href="/images/photos/add/">Add a Photo</a>
-    </nav>
-<!-- {% endblock %} -->
-<!-- <p>{{imgs}}</p>
-<p>{{albums}}</p> -->
-<!-- {% block thumbnails %} -->
-<div>
-    <h2>Albums</h2>
-    <section>
-        {%for album in albums%}
-            <p>{{album}}</p>
-            <a href="/images/albums/{{album.pk}}/edit/">Edit Album</a>
-            {% if album.cover %}
-                {% thumbnail album.cover.photo_file "100x100" as al_cover%}
-                    <a href="/images/album/{{user.pk}}/{{album.pk}}"><img src="{{ al_cover.url }}"width="{{al_cover.x}}" height="{{al_cover.y}}"/></a>
-                {% empty %}
-                    <p>No albums Found</p>
-                {% endthumbnail %}
-            {% else %}
-                <a href="/images/album/{{user.pk}}/{{album.pk}}"><img src="{% static 'default_cover.jpg' %}" width="100" height="100"/></a>
-            {% endif %}
-        {% endfor %}
-    </section>
-</div>
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>IMAGER Website</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="{% static "assets/css/library.css" %}" />
+    </head>
+    <body>
+        <h1>Welcome to the Library</h1>
+        <nav>
+            <a href="/images/albums/add/">Create an Album</a> | <a href="/images/photos/add/">Add a Photo</a>
+        </nav>
+        <div>
+            <h2>Albums</h2>
+            <section>
+                {%for album in albums%}
+                    <div class="thumbnail" id="album">
+                        <p>{{album}}</p>
+                        <a href="/images/albums/{{album.pk}}/edit/">Edit Album</a>
+                        {% if album.cover %}
+                            {% thumbnail album.cover.photo_file "200x200" crop="center" as al_cover%}
+                                <a href="/images/album/{{user.pk}}/{{album.pk}}"><img src="{{ al_cover.url }}"width="{{al_cover.x}}" height="{{al_cover.y}}"/></a>
+                            {% empty %}
+                                <p>No albums Found</p>
+                            {% endthumbnail %}
+                        {% else %}
+                            <a href="/images/album/{{user.pk}}/{{album.pk}}"><img src="{% static 'default_cover.jpg' %}" width="200" height="200"/></a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </section>
+        </div>
 
-<div>
-    <h2>Photos</h2>
-    <section>
-        {%for photo in imgs%}
-        <p>{{photo}}</p>
-        <a href="/images/photos/{{photo.pk}}/edit/">Edit Photo</a>
-            {% thumbnail photo.photo_file "100x100" as img%}
-                <a href="/images/photos/{{user.pk}}/{{photo.pk}}"><img src="{{ img.url }}"width="{{img.x}}" height="{{img.y}}"/></a>
-            {% empty %}
-                <p>No photos Found</p>
-            {% endthumbnail %}
-        {% endfor %}
-    </section>
-</div>
-<!-- {% endblock %} -->
+        <div>
+            <h2>Photos</h2>
+            <section>
+                {%for photo in imgs%}
+                    <div class="thumbnail" id="photo">
+                        <p>{{photo}}</p>
+                        <a href="/images/photos/{{photo.pk}}/edit/">Edit Photo</a>
+                        {% thumbnail photo.photo_file "200x200" crop="center" as img%}
+                            <a href="/images/photos/{{user.pk}}/{{photo.pk}}"><img src="{{ img.url }}"width="{{img.x}}" height="{{img.y}}"/></a>
+                        {% empty %}
+                            <p>No photos Found</p>
+                        {% endthumbnail %}
+                    </div>
+                {% endfor %}
+            </section>
+        </div>
+    </body>
+</html>
