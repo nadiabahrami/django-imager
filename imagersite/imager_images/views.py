@@ -49,12 +49,20 @@ def add_album(request):
     return render(request, 'create_album.html', context={'form': form})
 
 
-def edit_album(request, pk_album):
+# TODO: From class notes, Selena
+# def get_object(self, queryset=None)
+# try:
+#     return super(AddOrEditContent, self).get_object(queryset)
+# except AttributeError:
+#     return
+
+def edit_album(request, pk):
     # TODO: Finish this form
-    try:
-        pk_album = CreateAlbum.objects.get(id=request.POST.get(pk=None))
-    except CreateAlbum.DoesNotExist:
-        pk_album = None
+    # try:
+    #     pk_album = CreateAlbum.objects.get(id=request.POST.get(pk=pk))
+    # except:
+    #     pk_album = None
+
 
     form = CreateAlbum(request.POST, request.FILES)
     form.fields['pictures'].queryset = request.user.photo
@@ -64,7 +72,6 @@ def edit_album(request, pk_album):
             form.instance.owner = request.user
             form.save()
     return render(request, 'create_album.html', context={'form': form})
-
 
 
 def add_photo(request):

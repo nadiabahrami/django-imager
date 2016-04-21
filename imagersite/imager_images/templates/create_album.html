@@ -22,3 +22,19 @@
         <input type="submit" value="Submit" />
     </form>
 {% endblock %}
+
+{% block thumbnails %}
+    <article>
+        {% if album.pictures %}
+            {% for pic in album.pictures.all %}
+                <a class="thumbnail" href="{{ pic.photo_file.url }}" data-position="left center"></a>
+                <h2>{{ pic.title }}</h2>
+                <p>{{ pic.description }}</p>
+            {% endfor %}
+        {% else %}
+            <a class="thumbnail" href="{% static "default_cover.jpg" %}" data-position="left center"></a>
+            <h2>No Photo Found</h2>
+            <p>Go upload a photo to change this.</p>
+        {% endif %}
+    </article>
+{% endblock %}
