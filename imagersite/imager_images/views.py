@@ -49,6 +49,7 @@ def add_album(request):
         if form.is_valid():
             form.instance.owner = request.user
             form.save()
+            return HttpResponseRedirect('/images/library/')
     return render(request, 'create_album.html', context={'form': form})
 
 
@@ -74,7 +75,7 @@ def edit_album(request, pk):
         if form.is_valid():
             form.instance.owner = request.user
             form.save()
-            return HttpResponseRedirect('/library/')
+            return HttpResponseRedirect('/images/library/')
     else:
         try:
             user_album = Album.all_albums.get(id=pk)
@@ -92,6 +93,7 @@ def add_photo(request):
         if form.is_valid():
             form.instance.owner = request.user
             form.save()
+            return HttpResponseRedirect('/library/')
     return render(request, 'add_photo.html', context={'form': form})
 
 
