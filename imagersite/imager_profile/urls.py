@@ -8,5 +8,5 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     url(r'^$', login_required(ProfileView.as_view()), name='profile_view'),
-    url(r'^edit/', login_required(edit_profile), name='create_al_view'),
+    url(r'^edit/', login_required(edit_profile), name='edit_profile'),
 ]

@@ -58,11 +58,11 @@ class UserProfile(models.Model):
         return "{}'s profile".format(self.user.username)
 
 
-class EditYser(ModelForm):
+class EditUser(ModelForm):
 
     class Meta:
-        model = settings.AUTH_USER_MODEL
-        fields = ['first_name', 'last_name', 'email_address']
+        model = User
+        fields = ['first_name', 'last_name', 'email']
 
 
 class EditProfile(ModelForm):

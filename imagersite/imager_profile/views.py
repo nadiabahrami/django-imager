@@ -1,6 +1,9 @@
 from __future__ import unicode_literals
 from imager_images.models import Photo, Album
+from imager_profile.models import UserProfile
+from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
+from django.shortcuts import render
 
 
 class ProfileView(TemplateView):
@@ -16,14 +19,15 @@ class ProfileView(TemplateView):
 
 def edit_profile(request):
     if request.method == 'POST':
-        user_album = Album.all_albums.get(id=pk)
-        form = CreateAlbum(request.POST, instance=user_album)
-        if form.is_valid():
-            form.instance.owner = request.user
-            form.save()
-            return HttpResponseRedirect('/profile/')
-        return render(request, 'edit_album.html', context={'form': form})
+        # user_album = UserProfile.all_albums.get()
+        # form = CreateAlbum(request.POST, instance=user_album)
+        # if form.is_valid():
+        #     form.instance.owner = request.user
+        #     form.save()
+        #     return HttpResponseRedirect('/profile/')
+        # return render(request, 'edit_album.html', context={'form': form})
+        pass
     else:
-        user_album = Album.all_albums.get(id=pk)
-        form = CreateAlbum(instance=user_album)
-        return render(request, 'edit_album.html', context={'form': form})
+        user = UserProfile.objects.get(user=request.user)
+        form_profile = UserProfile(instance=user)
+        return render(request, 'edit_profile.html', context={'form_profile': form_profile})
