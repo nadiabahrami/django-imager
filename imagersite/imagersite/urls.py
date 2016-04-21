@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.conf import settings
 from django.contrib import admin
-from .views import ClassView
+from .views import HomeView
 from django.conf.urls.static import static
 
 
@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^images/', include('imager_images.urls')),
     url(r'^profile/', include('imager_profile.urls')),
-    url(r'^$', ClassView.as_view(), name='home_page'),
+    url(r'^$', HomeView.as_view(), name='home_page'),
     url(r'^images/', include('imager_images.urls')),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
 ]
