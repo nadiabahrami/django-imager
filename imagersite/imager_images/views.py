@@ -64,28 +64,20 @@ def edit_album(request, pk):
     # TODO: Finish this form
     # import pdb; pdb.set_trace()
     if request.method == 'POST':
-        try:
-            user_album = Album.all_albums.get(id=pk)
-            form = CreateAlbum(request.POST, instance=user_album)
-        except ObjectDoesNotExist:
-            form = CreateAlbum(request.POST, request.FILES)
-            form.fields['pictures'].queryset = request.user.photo
-            form.fields['cover'].queryset = request.user.photo
-
+        user_album = Album.all_albums.get(id=pk)
+        form = CreateAlbum(request.POST, instance=user_album)
+        form.fields['pictures'].queryset = request.user.photo
+        form.fields['cover'].queryset = request.user.photo
         if form.is_valid():
             form.instance.owner = request.user
             form.save()
             return HttpResponseRedirect('/images/library/')
+        return render(request, 'edit_album.html', context={'form': form})
     else:
-        try:
-            user_album = Album.all_albums.get(id=pk)
-            form = CreateAlbum(request.POST, instance=user_album)
-            form.fields['pictures'].queryset = request.user.photo
-            form.fields['cover'].queryset = request.user.photo
-        except ObjectDoesNotExist:
-            form = CreateAlbum(request.POST, request.FILES)
-            form.fields['pictures'].queryset = request.user.photo
-            form.fields['cover'].queryset = request.user.photo
+        user_album = Album.all_albums.get(id=pk)
+        form = CreateAlbum(request.POST, instance=user_album)
+        form.fields['pictures'].queryset = request.user.photo
+        form.fields['cover'].queryset = request.user.photo
         return render(request, 'edit_album.html', context={'form': form})
 
 
