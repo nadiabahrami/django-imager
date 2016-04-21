@@ -61,8 +61,6 @@ def add_album(request):
 #     return
 
 def edit_album(request, pk):
-    # TODO: Finish this form
-    # import pdb; pdb.set_trace()
     if request.method == 'POST':
         user_album = Album.all_albums.get(id=pk)
         form = CreateAlbum(request.POST, instance=user_album)
@@ -91,10 +89,16 @@ def add_photo(request):
     return render(request, 'add_photo.html', context={'form': form})
 
 
-def edit_photo(request):
-    form = AddPhoto(request.POST, request.FILES)
+def edit_photo(request, pk):
     if request.method == 'POST':
+        user_photo = Photo.public.get(id=pk)
+        form = AddPhoto(request.POST, instance=user_photo)
         if form.is_valid():
             form.instance.owner = request.user
             form.save()
-    return render(request, 'edit_photo.html', context={'form': form})
+            return HttpResponseRedirect('/images/library/')
+        return render(request, 'edit_photo.html', context={'form': form})
+    else:
+        user_photo = Photo.public.get(id=pk)
+        form = AddPhoto(request.POST, instance=user_photo)
+        return render(request, 'edit_photo.html', context={'form': form})

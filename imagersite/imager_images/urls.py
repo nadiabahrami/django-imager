@@ -14,5 +14,5 @@ urlpatterns = [
     url(r'^albums/add/', login_required(add_album), name='create_al_view'),
     url(r'^photos/add/', login_required(add_photo), name='add_pho_view'),
     url(r'^albums/(?P<pk>[0-9]+)/edit/', login_required(edit_album), name='create_al_view'),
-    url(r'^photos/(?P<user_id>[0-9]+)/edit/', login_required(edit_photo), name='add_pho_view'),
+    url(r'^photos/(?P<pk>[0-9]+)/edit/', login_required(edit_photo), name='add_pho_view'),
 ]
