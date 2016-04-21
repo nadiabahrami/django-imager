@@ -1,0 +1,23 @@
+@import url(font-awesome.min.css);
+@import url("http://fonts.googleapis.com/css?family=Roboto:400,700");
+
+body {
+    font-family: "Roboto", Helvetica, sans-serif;
+    background-color: #fff;
+    color: #aaa;
+}
+
+section {
+    margin-left:5%;
+    margin-right:5%;
+}
+
+.thumbnail {
+    display: inline-block;
+    align-content: center;
+}
+
+.thumbnail a {
+    display: block;
+    align-content: center;
+}
