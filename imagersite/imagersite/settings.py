@@ -106,7 +106,7 @@ DATABASES = {
         'NAME': 'imagerdb',
         'USER': 'imageruesr',
         'PASSWORD': 'supersecret',
-        'HOST': '127.0.0.1',
+        'HOST': 'imager-us-west-2b.coprttxpxj5s.us-west-2.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
