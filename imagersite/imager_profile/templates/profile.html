@@ -17,6 +17,9 @@
         </div>
         <!-- End Navigation -->
 
+        <p>Name: <strong>{{ user.first_name }} {{ user.last_name }}</strong></p>
+        <p>Email: <strong>{{ user.email }}</strong></p>
+
         <p>Photos: <strong>{{ photo_count }}</strong> | Albums: <strong>{{ album_count }}</strong></p>
         <p>Camera type: <strong>{{ user.profile.camera_type }}</strong></p>
         <p>Address: <strong>{{ user.profile.address }}</strong> </p>
