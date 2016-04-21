@@ -116,7 +116,7 @@ class AuthenticatedImageSiteTests(TestCase):
         self.user.set_password('secret')
         self.user.save()
 
-    def test_register(self): #WTF  WHY NOT 200?  Why 302
+    def test_register(self):  # WTF  WHY NOT 200?  Why 302
         """Test that the register route is valid."""
         response = self.client.get("/profile/", {})
         self.assertEquals(response.status_code, 200)

@@ -4,7 +4,7 @@
 body {
     font-family: "Roboto", Helvetica, sans-serif;
     background-color: #fff;
-    color: #aaa;
+    color: #555;
 }
 
 section {
@@ -17,9 +17,20 @@ section {
     align-content: center;
     margin-left: 2%;
     width:200px;
+    margin-bottom: 15px;
 }
 
 .thumbnail a {
     display: block;
     align-content: center;
 }
+
+.lib_block{
+    background-color: #F7F7F7;
+}
+
+div h2{
+    padding-top: 15px;
+    padding-left:2%;
+}
+

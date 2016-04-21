@@ -85,3 +85,28 @@ class ImagerSiteTests(TestCase):
         """Test correct view is attached to correct URL."""
         resolver = resolve('/admin/')
         self.assertEquals(resolver.view_name, 'admin:index')
+
+    def test_logout_view(self):
+        """Test correct view is attached to correct URL."""
+        resolver = resolve('/accounts/logout/')
+        self.assertEquals(resolver.view_name, 'auth_logout')
+
+    def test_login_view(self):
+        """Test correct view is attached to correct URL."""
+        resolver = resolve('/accounts/login/')
+        self.assertEquals(resolver.view_name, 'auth_login')
+
+    def test_register_view(self):
+        """Test that the register route is valid."""
+        resolver = resolve('/accounts/register/')
+        self.assertEquals(resolver.view_name, 'registration_register')
+
+    def test_authentication_view(self):
+        """Test that the register route is valid."""
+        response = self.client.get("/accounts/complete/", {"username": "bob", "password": "secret"})
+        self.assertEquals(response.status_code, 200)
+
+    def test_authentication_post_redirect_view(self):
+        """Test that the register route is valid."""
+        response = self.client.get("/accounts/complete/", {"username": "bob", "password": "secret"})
+        self.assertEquals(response.reg_post_good.status_code, 200)

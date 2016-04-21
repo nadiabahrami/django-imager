@@ -1,3 +1,5 @@
+# -*-Coding:Utf-8 -*-
+"""View module for IMager_profile."""
 from __future__ import unicode_literals
 from imager_images.models import Photo, Album
 from imager_profile.models import UserProfile, EditProfile, EditUser
@@ -8,6 +10,8 @@ from django.contrib.auth.models import User
 
 
 class ProfileView(TemplateView):
+    """ProfileView view sending ut user coutns for photo and albums."""
+
     template_name = 'profile.html'
 
     def get_context_data(self, **kwargs):
@@ -19,6 +23,7 @@ class ProfileView(TemplateView):
 
 
 def edit_profile(request):
+    """Edit profile view fucntion."""
     if request.method == 'POST':
         up = UserProfile.objects.get(user=request.user)
         form_profile = EditProfile(request.POST, instance=up)

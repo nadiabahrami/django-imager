@@ -59,14 +59,20 @@ class UserProfile(models.Model):
 
 
 class EditUser(ModelForm):
+    """Define the EditUser ModelForm."""
 
     class Meta:
+        """Define the Meta data for the form class."""
+
         model = User
         fields = ['first_name', 'last_name', 'email']
 
 
 class EditProfile(ModelForm):
+    """Define the EditUser ModelForm."""
 
     class Meta:
+        """Define the Meta data for the form class."""
+
         model = UserProfile
         fields = ['camera_type', 'address', 'web_link', 'photo_type', 'social_media', 'region']
