@@ -27,13 +27,25 @@ SECRET_KEY = '@wf0x!oss73*bq*-2=#mphhc1-4rvfk)^2hk725yqrqj=773a0'
 DEBUG = False
 THUMBNAIL_DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ec2-52-39-45-108.us-west-2.compute.amazonaws.com', 'localhost']
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
 # https://docs.djangoproject.com/en/1.9/topics/email/#configuring-email-for-development
 # python -m smtpd -n -c DebuggingServer localhost:1025
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Email: DEBUG
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Email: PRODUCTION
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 
 LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/profile/'
@@ -101,7 +113,9 @@ WSGI_APPLICATION = 'imagersite.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default': dj_database_url.config(
+        default=os.environ.get("DATABASE_URL")
+  )
 }
 
 # DATABASES['default'] = dj_database_url.config(conn_max_age=600)
@@ -145,7 +159,7 @@ USE_TZ = True
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
