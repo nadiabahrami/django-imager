@@ -31,4 +31,12 @@
             <p>Select a cover photo to change this.</p>
         {% endif %}
     </article>
+
+    {% for pic in album.pictures.all %}
+            <article>
+                <a class="thumbnail" href="{{ pic.photo_file.url }}"><img src="{{ pic.photo_file.url }}" alt="" /></a>
+                <h2>{{ pic.title }}</h2>
+                <p>{{ pic.description }}</p>
+             </article>
+    {% endfor %}
 {% endblock %}

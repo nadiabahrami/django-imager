@@ -1,8 +1,9 @@
 """Testing the imager_images models."""
 from django.test import TestCase
 import factory
-from imager_images.models import Photo, Album, CreateAlbum, AddPhoto
-from imager_profile.models import User, UserProfile
+from imager_images.models import Photo, Album
+from imager_profile.models import User
+from datetime import datetime
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -26,51 +27,78 @@ class ImageTestCase(TestCase):
         self.user.set_password('secret')
         self.user.save()
 
-        self.album_1 = Album(title='album 1', owner=self.user)
-        self.album_2 = Album(title='album 2', owner=self.user)
-        self.album_1.save()
-        self.album_2.save()
+        self.album1 = Album.all_albums.create(title='album1', owner=self.user)
+        self.album1.save()
 
-        self.image_1 = Photo(title='image 1', owner=self.user)
-        self.image_2 = Photo(title='image 2', owner=self.user)
-        self.image_1.save()
-        self.image_2.save()
+        self.image1 = Photo.public.create(title='image1', owner=self.user)
+        self.image1.save()
 
-        self.album_1.pictures.add(self.image_1)
-        self.album_1.pictures.add(self.image_2)
-
-        self.album_2.pictures.add(self.image_2)
-
+        self.album1.pictures.add(self.image1)
 
     def test_album(self):
-        """Test that profile is created on user save."""
+        """Test that album manager connection is made."""
         self.assertTrue(self.user.album)
 
+    def test_album_title(self):
+        """Test album title is correct and created."""
+        self.assertEquals(self.album1.title, 'album1')
 
-##### leverage the following NOTES for testing forms ###
-# from rebar.testing import flatten_to_dict
-# from contacts import forms
-# ...
-# class EditContactFormTests(TestCase):
+    def test_album_description(self):
+        """Test that album description is created."""
+        self.assertEquals(self.album1.description, '')
 
-#     def test_mismatch_email_is_invalid(self):
+    def test_album_owner(self):
+        """Test that album owner is connected to correct user."""
+        self.assertEquals(self.album1.owner.username, 'bob')
 
-#         form_data = flatten_to_dict(forms.ContactForm())
-#         form_data['first_name'] = 'Foo'
-#         form_data['last_name'] = 'Bar'
-#         form_data['email'] = 'foo@example.com'
-#         form_data['confirm_email'] = 'bar@example.com'
+    def test_album_publish_status(self):
+        """Test that published status is default of private."""
+        self.assertEquals(self.album1.published, 'private')
 
-#         bound_form = forms.ContactForm(data=form_data)
-#         self.assertFalse(bound_form.is_valid())
+    def test_album_date_created(self):
+        """Test that album has a datetime object in published date."""
+        self.assertIsInstance(self.album1.date_created, datetime)
 
-#     def test_same_email_is_valid(self):
+    def test_album_date_modified(self):
+        """Test that has a datetime object in modified date."""
+        self.assertIsInstance(self.album1.date_modified, datetime)
 
-#         form_data = flatten_to_dict(forms.ContactForm())
-#         form_data['first_name'] = 'Foo'
-#         form_data['last_name'] = 'Bar'
-#         form_data['email'] = 'foo@example.com'
-#         form_data['confirm_email'] = 'foo@example.com'
+    def test_album_date_published(self):
+        """Test that album does not have a pblished date."""
+        self.assertIsNone(self.album1.date_published)
 
-#         bound_form = forms.ContactForm(data=form_data)
-#         self.assert_(bound_form.is_valid())
+    def test_album_pictures(self):
+        """Test that album picture containes picture manager connection."""
+        self.assertIsNotNone(self.album1.pictures)
+
+    def test_photo(self):
+        """Test that photo manager connection is made."""
+        self.assertTrue(self.user.photo)
+
+    def test_photo_title(self):
+        """Test photo title is correct and created."""
+        self.assertEquals(self.image1.title, 'image1')
+
+    def test_photo_description(self):
+        """Test that photo description is created."""
+        self.assertEquals(self.image1.description, '')
+
+    def test_photo_owner(self):
+        """Test that album owner is connected to correct user."""
+        self.assertEquals(self.image1.owner.username, 'bob')
+
+    def test_photo_publish_status(self):
+        """Test that published status is default of private."""
+        self.assertEquals(self.image1.published, 'private')
+
+    def test_photo_date_uploaded(self):
+        """Test that photo has a datetime object in published date."""
+        self.assertIsInstance(self.image1.date_uploaded, datetime)
+
+    def test_photo_date_modified(self):
+        """Test that has a datetime object in modified date."""
+        self.assertIsInstance(self.image1.date_modified, datetime)
+
+    def test_photo_date_published(self):
+        """Test that album does not have a pblished date."""
+        self.assertIsNone(self.image1.date_published)
