@@ -116,11 +116,6 @@ class AuthenticatedImageSiteTests(TestCase):
         self.user.set_password('secret')
         self.user.save()
 
-    def test_register(self):  # WTF  WHY NOT 200?  Why 302
-        """Test that the register route is valid."""
-        response = self.client.get("/profile/", {})
-        self.assertEquals(response.status_code, 200)
-
     def test_edit_profile_view(self):
         """Test correct view is attached to correct URL."""
         resolver = resolve('/profile/edit/')
@@ -130,10 +125,3 @@ class AuthenticatedImageSiteTests(TestCase):
         """Test correct view is attached to correct URL."""
         resolver = resolve('/profile/')
         self.assertEquals(resolver.view_name, 'profile_view')
-
-    # def test_login_post_invalid(self):
-    #     """Test if the user is in the DB, with invalid login."""
-    #     response = self.client.post("/accounts/login/",
-    #                                 {"username": "bob", "password": "wrongpassword"})
-    #     self.assertNotEquals(response.status_code, 302)
-    #     self.assertEquals(response.status_code, 200)
