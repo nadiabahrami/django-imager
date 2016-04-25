@@ -78,7 +78,7 @@ def add_photo(request):
         if form.is_valid():
             form.instance.owner = request.user
             form.save()
-            return HttpResponseRedirect('/library/')
+            return HttpResponseRedirect('/images/library/')
     return render(request, 'add_photo.html', context={'form': form})
 
 
