@@ -24,8 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@wf0x!oss73*bq*-2=#mphhc1-4rvfk)^2hk725yqrqj=773a0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-THUMBNAIL_DEBUG = False
+DEBUG = True
+THUMBNAIL_DEBUG = True
 
 ALLOWED_HOSTS = ['ec2-52-39-45-108.us-west-2.compute.amazonaws.com', 'localhost']
 
@@ -64,7 +64,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'imager_api',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGE_SIZE': 10
+}
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -119,6 +126,17 @@ DATABASES = {
   )
 }
 
+# #local
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'imager',
+#        'USER': '',
+#        'PASSWORD': '',
+#        'HOST': '127.0.0.1',
+#        'PORT': '5432',
+#    }
+# }
 
 # DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
@@ -172,7 +190,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'imagersite/static'),
 ]
 
 #media
