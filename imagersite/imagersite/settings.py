@@ -27,7 +27,7 @@ SECRET_KEY = '@wf0x!oss73*bq*-2=#mphhc1-4rvfk)^2hk725yqrqj=773a0'
 DEBUG = False
 THUMBNAIL_DEBUG = False
 
-ALLOWED_HOSTS = ['ec2-52-39-45-108.us-west-2.compute.amazonaws.com', 'localhost']
+ALLOWED_HOSTS = ['ec2-52-37-70-39.us-west-2.compute.amazonaws.com', 'localhost']
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
