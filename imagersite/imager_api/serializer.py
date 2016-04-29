@@ -4,8 +4,9 @@ from imager_images.models import Photo, Album
 
 
 
-class PhotoSerializer(serializers.ModelSerializer):
+class PhotoSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
+    photo_file = serializers.FileField(use_url=True)
 
     class Meta:
         model = Photo

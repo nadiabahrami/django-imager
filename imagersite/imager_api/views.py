@@ -18,12 +18,11 @@ class PhotoViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,
                           IsOwner,)
 
-    def list(self, request):
-        queryset = self.queryset
-        if not request.user.is_superuser:
-            queryset = queryset.filter(owner=request.user)
-        serializer = self.serializer_class(queryset, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        queryset = super(PhotoViewSet, self).get_queryset()
+
+        user = self.request.user
+        return queryset.filter(owner=user)
 
 
 # class AlbumViewSet(viewsets.ModelViewSet):
