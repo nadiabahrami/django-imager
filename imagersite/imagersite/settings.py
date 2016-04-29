@@ -24,8 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@wf0x!oss73*bq*-2=#mphhc1-4rvfk)^2hk725yqrqj=773a0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-THUMBNAIL_DEBUG = False
+DEBUG = True
+THUMBNAIL_DEBUG = True
 
 ALLOWED_HOSTS = ['ec2-52-37-70-39.us-west-2.compute.amazonaws.com', 'localhost']
 
@@ -34,18 +34,19 @@ ACCOUNT_ACTIVATION_DAYS = 7
 # https://docs.djangoproject.com/en/1.9/topics/email/#configuring-email-for-development
 # python -m smtpd -n -c DebuggingServer localhost:1025
 
+
 # Email: DEBUG
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Email: PRODUCTION
-EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'noreplymini338@gmail.com'
+EMAIL_HOST_PASSWORD = 'hytnddrcodsvxojk'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
+EMAIL_USE_TLS = True
+
+# DEFAULT_FROM_EMAIL = 'noreplymini338@gmail.com'
 
 
 LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/profile/'
@@ -63,7 +64,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'imager_api',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGE_SIZE': 10
+}
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -105,20 +113,41 @@ CACHES = {
 
 
 
-
 WSGI_APPLICATION = 'imagersite.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+# Debug
 DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get("DATABASE_URL")
   )
 }
 
+# #local
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'imager',
+#        'USER': '',
+#        'PASSWORD': '',
+#        'HOST': '127.0.0.1',
+#        'PORT': '5432',
+#    }
+# }
+
 # DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+
+# Production
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.environ.get("DATABASE_URL")
+#   )
+# }
+# env DATABASE_URL=postgres://imageruesr:supersecret@imager-us-west-2b.coprttxpxj5s.us-west-2.rds.amazonaws.com:5432/imagerdb
+
 
 
 # Password validation
@@ -161,7 +190,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'imagersite/static'),
 ]
 
 #media
