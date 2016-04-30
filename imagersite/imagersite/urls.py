@@ -1,4 +1,4 @@
-"""imagersite URL Configuration
+"""imagersite URL Configuration.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.9/topics/http/urls/
@@ -14,9 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import include, url
+from django.conf import settings
 from django.contrib import admin
+from .views import HomeView
+from django.conf.urls.static import static
+
 
 urlpatterns = [
-    url(r'^imager_profile/', include('imager_profile.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^images/', include('imager_images.urls')),
+    url(r'^profile/', include('imager_profile.urls')),
+    url(r'^$', HomeView.as_view(), name='home_page'),
+    url(r'^accounts/', include('registration.backends.hmac.urls')),
+    url(r'^api/', include('imager_api.urls'))
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )

@@ -2,6 +2,7 @@
 from django.test import TestCase
 import factory
 from imager_profile.models import User, UserProfile
+from django.core.urlresolvers import resolve
 
 
 class ProfileTestCase2(TestCase):
@@ -84,6 +85,10 @@ class ProfileTestCase(TestCase):
         self.user.save()
         self.assertNotIn(self.user.profile, UserProfile.active.all())
 
+    def test_profile_string(self):
+        """Assert that the sting from profile is correct."""
+        self.assertEquals(str(self.user.profile), "bob's profile")
+
 
 class DeleteTheDude(ProfileTestCase):
     """Define a class that deletes my bob."""
@@ -100,3 +105,23 @@ class DeleteTheDude(ProfileTestCase):
     def test_all_active2(self):
         """Assert that there are no entries that are active."""
         self.assertEquals(len(UserProfile.active.all()), 0)
+
+
+class AuthenticatedImageSiteTests(TestCase):
+    """Define a class with a series of profile tests."""
+
+    def setUp(self):
+        """Instance setup factory."""
+        self.user = UserFactory.create()
+        self.user.set_password('secret')
+        self.user.save()
+
+    def test_edit_profile_view(self):
+        """Test correct view is attached to correct URL."""
+        resolver = resolve('/profile/edit/')
+        self.assertEquals(resolver.view_name, 'edit_profile')
+
+    def test_profile_view(self):
+        """Test correct view is attached to correct URL."""
+        resolver = resolve('/profile/')
+        self.assertEquals(resolver.view_name, 'profile_view')

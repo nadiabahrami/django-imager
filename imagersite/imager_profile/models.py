@@ -3,6 +3,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.encoding import python_2_unicode_compatible
+from django.conf import settings
+from django.forms import ModelForm
 
 
 class ActiveProfileManager(models.Manager):
@@ -10,8 +12,8 @@ class ActiveProfileManager(models.Manager):
 
     def get_queryset(self):
         """Return a list of all active users."""
-        ga = super(ActiveProfileManager, self).get_queryset()
-        return ga.filter(user__is_active__exact=True)
+        qs = super(ActiveProfileManager, self).get_queryset()
+        return qs.filter(user__is_active__exact=True)
 
 
 LOCATION = (
@@ -28,7 +30,8 @@ class UserProfile(models.Model):
     """Create a unique profile for a user."""
 
     user = models.OneToOneField(
-        User,
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
         related_name="profile",
         primary_key=True,
     )
@@ -42,6 +45,7 @@ class UserProfile(models.Model):
 
     friends = models.ManyToManyField("self", symmetrical=False,
                                      related_name='friend_of')
+    objects = models.Manager()
     active = ActiveProfileManager()
 
     @property
@@ -49,6 +53,26 @@ class UserProfile(models.Model):
         """Property to define if user is active."""
         return self.user.is_active
 
-
     def __str__(self):
+        """Hand back username's profile."""
         return "{}'s profile".format(self.user.username)
+
+
+class EditUser(ModelForm):
+    """Define the EditUser ModelForm."""
+
+    class Meta:
+        """Define the Meta data for the form class."""
+
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+
+class EditProfile(ModelForm):
+    """Define the EditUser ModelForm."""
+
+    class Meta:
+        """Define the Meta data for the form class."""
+
+        model = UserProfile
+        fields = ['camera_type', 'address', 'web_link', 'photo_type', 'social_media', 'region']

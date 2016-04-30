@@ -1,0 +1,40 @@
+{% extends 'site_base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <h1>Create Album.</h1>
+
+    <!-- Navigation -->
+    <div>
+        {% if user.is_authenticated %}User: <a href="/profile/" target="_self">{{user.username}}</a><br>{% endif %}
+
+        {% if user.is_authenticated %}
+            <a href="/images/library/">Photo library</a> | <a href="/accounts/logout/">Log out</a>
+        {% else %}
+            <a href="/accounts/login/">Log in</a> | <a href="/accounts/register/">Register</a>
+        {% endif %}
+    </div>
+    <!-- End Navigation -->
+
+    <form action ="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
+{% endblock %}
+
+{% block thumbnails %}
+    <article>
+        {% if album.pictures %}
+            {% for pic in album.pictures.all %}
+                <a class="thumbnail" href="{{ pic.photo_file.url }}" data-position="left center"></a>
+                <h2>{{ pic.title }}</h2>
+                <p>{{ pic.description }}</p>
+            {% endfor %}
+        {% else %}
+            <a class="thumbnail" href="{% static "default_cover.jpg" %}" data-position="left center"></a>
+            <h2>No Photo Found</h2>
+            <p>Go upload a photo to change this.</p>
+        {% endif %}
+    </article>
+{% endblock %}
